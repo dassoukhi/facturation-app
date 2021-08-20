@@ -1,0 +1,34 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap'); */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+/* #root{
+  background-color: rgb(211, 211, 211);
+} */
+.appContainer{
+  background-color: rgb(182, 182, 182);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex: 1;
+  
+}
+.RoutesContainer{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #f0f3f6;
+}
+.factures,
+.reports,
+.products,
+.team,
+.reports {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+}
