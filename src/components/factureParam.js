@@ -12,6 +12,17 @@ import Typography from '@material-ui/core/Typography'
 import AddressForm from './addressForm'
 import PaymentForm from './paymentForm'
 import Review from './review'
+import { AppBar } from '@material-ui/core'
+import styled from 'styled-components'
+
+const Nav = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`
 
 function Copyright() {
   return (
@@ -78,7 +89,7 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+export default function FactureParam() {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -93,11 +104,15 @@ export default function Checkout() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Toolbar>
-        <Typography variant='h6' color='inherit' noWrap>
-          Nouveau client
-        </Typography>
-      </Toolbar>
+      <Nav>
+        <AppBar position='absolute' color='white' className={classes.appBar}>
+          <Toolbar>
+            <Typography variant='h6' color='inherit' noWrap>
+              Paramétre facture
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Nav>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component='h1' variant='h4' align='center'>

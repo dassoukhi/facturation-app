@@ -1,23 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import NavBar from '../components/navBar'
-import Review from '../components/review'
+import Clients from '../components/clients'
 
 const Cont = styled.div`
   display: block;
   height: 100%;
-  margin: 15px;
+  margin: 10px;
   background: #fff;
 `
-const Factures = () => {
+const ClientsScreen = () => {
   return (
-    <div className='factures'>
+    <div className='clients'>
       <NavBar />
       <Cont>
-        <Review />
+        <Clients />
       </Cont>
     </div>
   )
 }
 
-export default Factures
+export default ClientsScreen

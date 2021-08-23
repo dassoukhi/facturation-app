@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Login from '../components/Login'
-import Profile from '../components/Profile'
-import Factures from '../pages/factures'
 import Sidebar from '../components/Sidebar'
+import FacturesScreen from '../pages/facturesScreen'
+import ClientsScreen from '../pages/clientsScreen'
+import EntrepriseParamScreen from '../pages/entrepriseParamScreen'
+import FactureParamScreen from '../pages/factureParamScreen'
+import ParamGeneralScreen from '../pages/paramGeneralScreen'
 
 function Routes() {
   return (
@@ -10,11 +12,23 @@ function Routes() {
       <Sidebar />
       <div className='RoutesContainer'>
         <Switch>
-          <Route path='/factures' exact component={Factures} />
-          <Route path='/clients' exact component={Profile} />
-          <Route path='/parametre/entreprise' exact component={Login} />
-          <Route path='/parametre/facture' exact component={Login} />
-          <Route path='/parametre/general' exact component={Profile} />
+          <Route path='/factures' exact component={FacturesScreen} />
+          <Route path='/clients' exact component={ClientsScreen} />
+          <Route
+            path='/parametre/entreprise'
+            exact
+            component={EntrepriseParamScreen}
+          />
+          <Route
+            path='/parametre/facture'
+            exact
+            component={FactureParamScreen}
+          />
+          <Route
+            path='/parametre/general'
+            exact
+            component={ParamGeneralScreen}
+          />
         </Switch>
       </div>
     </Router>

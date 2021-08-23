@@ -14,7 +14,7 @@ const NavIcon = styled.div`
 `
 
 const SidebarNav = styled.div`
-  background: #24293c;
+  background: #000131;
   width: 200px;
   height: 100vh;
   display: flex;
@@ -37,7 +37,7 @@ const Sidebar = () => {
         <SidebarNav sidebar={null}>
           <SidebarWrap>
             <NavIcon to='#'>
-              <span style={{ color: '#827705' }}>Dass~olution</span>
+              <span style={{ color: '#fafafa' }}>Dass~olution</span>
             </NavIcon>
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />

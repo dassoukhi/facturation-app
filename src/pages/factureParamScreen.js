@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import NavBar from '../components/navBar'
-import Checkout from './checkout'
+import FactureParam from '../components/factureParam'
 
 const Cont = styled.div`
   display: block;
@@ -9,15 +9,15 @@ const Cont = styled.div`
   margin: 15px;
   background: #fff;
 `
-const Profile = () => {
+const FactureParamScreen = () => {
   return (
-    <div className='profile'>
+    <div className='factures'>
       <NavBar />
       <Cont>
-        <Checkout />
+        <FactureParam />
       </Cont>
     </div>
   )
 }
 
-export default Profile
+export default FactureParamScreen
