@@ -1,166 +1,72 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Toolbar from '@material-ui/core/Toolbar'
+import { alpha, makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import Button from '@material-ui/core/Button'
-import Link from '@material-ui/core/Link'
-import Typography from '@material-ui/core/Typography'
-import AddressForm from './addressForm'
-import PaymentForm from './paymentForm'
-import Review from './review'
-import { AppBar } from '@material-ui/core'
-import styled from 'styled-components'
-
-const Nav = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-`
-
-function Copyright() {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import { useState } from 'react'
+import ListeFactures from './listeFactures'
+import NavFacture from './navFacture'
+import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: 'relative'
+  root: {
+    width: '100%',
+    height: '85vh'
   },
-  layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(1000 + theme.spacing(2) * 2)]: {
-      width: 1000,
-      marginLeft: 'auto',
-      marginRight: 'auto'
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.black, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.black, 0.15)
+    },
+    marginLeft: 0,
+    marginRight: 15,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto'
     }
   },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3)
-    }
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5)
-  },
-  buttons: {
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
     display: 'flex',
-    justifyContent: 'flex-end'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1)
+  inputRoot: {
+    color: 'inherit'
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch'
+      }
+    }
   }
 }))
 
-const steps = ['Shipping address', 'Payment details', 'Review your order']
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />
-    case 1:
-      return <PaymentForm />
-    case 2:
-      return <Review />
-    default:
-      throw new Error('Unknown step')
-  }
-}
-
 export default function Factures() {
   const classes = useStyles()
-  const [activeStep, setActiveStep] = React.useState(0)
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1)
-  }
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1)
+  const [input, setinput] = useState('')
+  const [createStatus, setCreateStatus] = useState(false)
+  const handleStatus = () => {
+    setCreateStatus(!createStatus)
   }
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Nav>
-        <AppBar position='absolute' color='white' className={classes.appBar}>
-          <Toolbar>
-            <Typography variant='h6' color='inherit' noWrap>
-              Factures
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </Nav>
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component='h1' variant='h4' align='center'>
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map(label => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <React.Fragment>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant='h5' gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant='subtitle1'>
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                </div>
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        </Paper>
-        <Copyright />
-      </main>
-    </React.Fragment>
+    <Paper className={classes.root}>
+      {/* eslint-disable react/prop-types */}
+      {!createStatus && <NavFacture search={input} setSearch={setinput} handleStatus={handleStatus}/>}
+      {!createStatus && <ListeFactures search={input} />}
+      {createStatus && <Button variant='contained' color='secondary' onClick={handleStatus}>Annuler</Button>}
+    </Paper>
   )
 }

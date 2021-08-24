@@ -6,7 +6,7 @@ import Factures from '../components/factures'
 const Cont = styled.div`
   display: block;
   height: 100%;
-  margin: 15px;
+  margin: 10px;
   background: #fff;
 `
 const FacturesScreen = () => {
