@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { SidebarData } from './SidebarData'
 import SubMenu from './SubMenu'
-import { IconContext } from 'react-icons/lib'
 
 const NavIcon = styled.div`
   margin-left: 1rem;
@@ -33,18 +32,16 @@ const SidebarWrap = styled.div`
 const Sidebar = () => {
   return (
     <>
-      <IconContext.Provider value={{ color: '#fff' }}>
-        <SidebarNav sidebar={null}>
-          <SidebarWrap>
-            <NavIcon to='#'>
-              <span style={{ color: '#fafafa' }}>Dass~olution</span>
-            </NavIcon>
-            {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} />
-            })}
-          </SidebarWrap>
-        </SidebarNav>
-      </IconContext.Provider>
+      <SidebarNav sidebar={null}>
+        <SidebarWrap>
+          <NavIcon to='#'>
+            <span style={{ color: '#fafafa' }}>Dass~olution</span>
+          </NavIcon>
+          {SidebarData.map((item, index) => {
+            return <SubMenu item={item} key={index} />
+          })}
+        </SidebarWrap>
+      </SidebarNav>
     </>
   )
 }
