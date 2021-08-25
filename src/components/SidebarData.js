@@ -1,41 +1,45 @@
 import React from 'react'
-import * as FaIcons from 'react-icons/fa'
-import * as IoIcons from 'react-icons/io'
-import * as RiIcons from 'react-icons/ri'
+import DescriptionIcon from '@material-ui/icons/Description'
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
+import SettingsIcon from '@material-ui/icons/Settings'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import BuildIcon from '@material-ui/icons/Build'
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 
 export const SidebarData = [
   {
     title: 'Factures',
     path: '/factures',
-    icon: <IoIcons.IoIosPaper />
+    icon: <DescriptionIcon />
   },
   {
     title: 'Clients',
     path: '/clients',
-    icon: <FaIcons.FaUserFriends />
+    icon: <PeopleAltIcon />
   },
   {
     title: 'Paramétre',
-    icon: <FaIcons.FaCog />,
+    icon: <SettingsIcon />,
 
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
+    iconClosed: <ArrowDropDownIcon />,
+    iconOpened: <ArrowDropUpIcon />,
 
     subNav: [
       {
         title: 'Entreprise',
         path: '/parametre/entreprise',
-        icon: <FaIcons.FaLandmark />
+        icon: <AccountBalanceIcon />
       },
       {
         title: 'Facture',
         path: '/parametre/facture',
-        icon: <IoIcons.IoIosPaper />
+        icon: <DescriptionIcon />
       },
       {
         title: 'Général',
         path: '/parametre/general',
-        icon: <FaIcons.FaTools />
+        icon: <BuildIcon />
       }
     ]
   }

@@ -6,10 +6,11 @@ import ListeFactures from './listeFactures'
 import NavFacture from './navFacture'
 import { Button } from '@material-ui/core'
 
+var hei = '85vh'
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    height: '85vh'
+    height: hei
   },
   search: {
     position: 'relative',
@@ -59,14 +60,24 @@ export default function Factures() {
   const [createStatus, setCreateStatus] = useState(false)
   const handleStatus = () => {
     setCreateStatus(!createStatus)
+    hei = '100vh'
   }
 
   return (
     <Paper className={classes.root}>
-      {/* eslint-disable react/prop-types */}
-      {!createStatus && <NavFacture search={input} setSearch={setinput} handleStatus={handleStatus}/>}
+      {!createStatus && (
+        <NavFacture
+          search={input}
+          setSearch={setinput}
+          handleStatus={handleStatus}
+        />
+      )}
       {!createStatus && <ListeFactures search={input} />}
-      {createStatus && <Button variant='contained' color='secondary' onClick={handleStatus}>Annuler</Button>}
+      {createStatus && (
+        <Button variant='contained' color='secondary' onClick={handleStatus}>
+          Annuler
+        </Button>
+      )}
     </Paper>
   )
 }

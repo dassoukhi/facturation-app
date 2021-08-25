@@ -2,7 +2,7 @@
 import { alpha, makeStyles } from '@material-ui/core'
 import React from 'react'
 import SearchIcon from '@material-ui/icons/Search'
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined'
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined'
 import { Button, InputBase } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -77,7 +77,7 @@ const NavFacture = ({search, setSearch, handleStatus}) => {
             justifyContent: 'center'
           }}
         >
-          <PeopleAltOutlinedIcon fontSize='large' />
+          <DescriptionOutlinedIcon fontSize='large' />
           <span style={{ fontSize: '25px', marginLeft: '10px' }}>Factures</span>
         </div>
         <Button
