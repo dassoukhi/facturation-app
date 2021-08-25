@@ -5,7 +5,8 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { Grid, TextField } from '@material-ui/core'
+import { Button, Grid, TextField } from '@material-ui/core'
+import ItemRow from './itemRow'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -77,70 +78,18 @@ export default function TableFacture() {
             <TableCell align='right'>{row.taxe}</TableCell>
           </TableRow>
         ))}
-        <TableRow key={null}>
-          <TableCell>
-            <Grid item xs={12} sm={12} justifyContent='flex-start'>
-              <TextField
-                id='descrition'
-                name='descrition'
-                label='Descrition'
-                variant='outlined'
-                size='small'
-                fullWidth
-                autoComplete='family-name'
-              />
-            </Grid>
-          </TableCell>
-          <TableCell align='right'>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id='quantité'
-                name='quantité'
-                label='Quantité'
-                type='number'
-                variant='outlined'
-                size='small'
-                fullWidth
-              />
-            </Grid>
-          </TableCell>
-          <TableCell align='right'>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id='prix'
-                name='prix'
-                label='Prix'
-                variant='outlined'
-                size='small'
-                fullWidth
-              />
-            </Grid>
-          </TableCell>
-          <TableCell align='right'>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id='total'
-                name='total'
-                label='Total'
-                variant='outlined'
-                size='small'
-                fullWidth
-              />
-            </Grid>
-          </TableCell>
-          <TableCell align='right'>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id='total'
-                name='total'
-                label='Total'
-                variant='outlined'
-                size='small'
-                fullWidth
-              />
-            </Grid>
-          </TableCell>
-        </TableRow>
+        {[1, 2, 3].map(e => (
+          <ItemRow key={e} />
+        ))}
+        <ItemRow key={4} />
+        <Button
+          variant='outlined'
+          style={{ marginTop: '10px' }}
+          size='small'
+          color='primary'
+        >
+          Ajouter une ligne
+        </Button>
 
         <TableRow>
           <TableCell rowSpan={4} />
