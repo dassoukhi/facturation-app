@@ -13,7 +13,6 @@ const ItemRow = ({ key }) => {
           variant='outlined'
           size='small'
           fullWidth
-          autoComplete='family-name'
           style={{ width: '300px' }}
         />
       </TableCell>

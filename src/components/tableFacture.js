@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -56,6 +56,12 @@ const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
 export default function TableFacture() {
   const classes = useStyles()
+  const [articles, setArticles] = useState([0])
+
+  const addLigne = () => {
+    setArticles([...articles, articles.length])
+    console.log(articles)
+  }
 
   return (
     <Table className={classes.table} aria-label='spanning table'>
@@ -78,15 +84,15 @@ export default function TableFacture() {
             <TableCell align='right'>{row.taxe}</TableCell>
           </TableRow>
         ))}
-        {[1, 2, 3].map(e => (
+        {articles.map(e => (
           <ItemRow key={e} />
         ))}
-        <ItemRow key={4} />
         <Button
           variant='outlined'
           style={{ marginTop: '10px' }}
           size='small'
           color='primary'
+          onClick={addLigne}
         >
           Ajouter une ligne
         </Button>

@@ -138,7 +138,6 @@ export default function NewFacture({ handleStatus }) {
                   variant='outlined'
                   size='small'
                   fullWidth
-                  autoComplete='family-name'
                 />
               </Grid>
               <Grid item xs={12} sm={3}>
@@ -150,7 +149,6 @@ export default function NewFacture({ handleStatus }) {
                   variant='outlined'
                   size='small'
                   fullWidth
-                  autoComplete='family-name'
                 />
               </Grid>
               <Grid
