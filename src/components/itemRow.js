@@ -92,9 +92,15 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           style={{ width: '60px' }}
         />
       </TableCell>
-      <IconButton onClick={deleteItem} style={{ marginTop: '15px' }}>
-        <DeleteOutlinedIcon fontSize='small' />
-      </IconButton>
+      {keyItem === 0 ? (
+        <IconButton disabled style={{ marginTop: '15px' }}>
+          <DeleteOutlinedIcon fontSize='small' />
+        </IconButton>
+      ) : (
+        <IconButton onClick={deleteItem} style={{ marginTop: '15px' }}>
+          <DeleteOutlinedIcon fontSize='small' />
+        </IconButton>
+      )}
     </TableRow>
   )
 }
