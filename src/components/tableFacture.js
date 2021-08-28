@@ -5,7 +5,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { Button, Grid, TextField } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import ItemRow from './itemRow'
 
 const StyledTableCell = withStyles(theme => ({
@@ -58,11 +58,17 @@ export default function TableFacture() {
   const classes = useStyles()
   const [articles, setArticles] = useState([0])
 
-  const addLigne = () => {
+  const addItem = () => {
     setArticles([...articles, articles.length])
-    console.log(articles)
   }
 
+  const deleteItem = e => {
+    if (articles.length > 1) {
+      const currentArt = [...articles]
+      currentArt.splice(e, 1)
+      setArticles(currentArt)
+    }
+  }
   return (
     <Table className={classes.table} aria-label='spanning table'>
       <TableHead>
@@ -75,28 +81,19 @@ export default function TableFacture() {
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map(row => (
-          <TableRow key={row.desc}>
-            <TableCell>{row.desc}</TableCell>
-            <TableCell align='right'>{row.qty}</TableCell>
-            <TableCell align='right'>{row.unit}</TableCell>
-            <TableCell align='right'>{ccyFormat(row.price)}</TableCell>
-            <TableCell align='right'>{row.taxe}</TableCell>
-          </TableRow>
-        ))}
         {articles.map(e => (
-          <ItemRow key={e} />
+          // eslint-disable-next-line react/jsx-key
+          <ItemRow keyItem={e} deleteItem={() => deleteItem(e)} />
         ))}
         <Button
           variant='outlined'
           style={{ marginTop: '10px' }}
           size='small'
           color='primary'
-          onClick={addLigne}
+          onClick={addItem}
         >
           Ajouter une ligne
         </Button>
-
         <TableRow>
           <TableCell rowSpan={4} />
           <TableCell colSpan={3}>Sous-total</TableCell>

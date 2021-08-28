@@ -6,6 +6,7 @@ import {
   AppBar,
   Button,
   makeStyles,
+  MenuItem,
   Paper,
   Toolbar,
   Typography
@@ -18,6 +19,15 @@ import DateFnsUtils from '@date-io/date-fns'
 import TableFacture from './tableFacture'
 import styled from 'styled-components'
 
+function getDate() {
+  var today = new Date()
+  var dd = String(today.getDate()).padStart(2, '0')
+  var mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
+  var yyyy = today.getFullYear()
+
+  today = mm + '-' + dd + '-' + yyyy
+  return today
+}
 const Nav = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -26,7 +36,20 @@ const Nav = styled.div`
   top: 0;
   z-index: 2;
 `
-
+const currencies = [
+  {
+    value: 'XAF',
+    label: 'Franc CFA'
+  },
+  {
+    value: 'USD',
+    label: 'Dollar ($)'
+  },
+  {
+    value: 'EUR',
+    label: 'Euro (€)'
+  }
+]
 const useStyles = makeStyles(theme => ({
   appBar: {
     position: 'relative'
@@ -66,12 +89,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function NewFacture({ handleStatus }) {
   const classes = useStyles()
-  const [selectedDate, setSelectedDate] = useState(
-    new Date('2014-08-18T21:11:54')
-  )
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const handleDateChange = date => {
     setSelectedDate(date)
   }
+  const [client, setClient] = useState('')
+  const [numFact, setNumFact] = useState('FACT-' + getDate())
+  const [devise, setDevise] = useState('XAF')
 
   return (
     <Fragment>
@@ -102,7 +126,7 @@ export default function NewFacture({ handleStatus }) {
                   <Button
                     variant='contained'
                     onClick={handleStatus}
-                    color='primary'
+                    color='default'
                   >
                     Enregistrer
                   </Button>
@@ -124,6 +148,8 @@ export default function NewFacture({ handleStatus }) {
                   name='client'
                   label='Client'
                   fullWidth
+                  value={client}
+                  onChange={e => setClient(e.target.value)}
                   size='small'
                   variant='outlined'
                   autoComplete='given-name'
@@ -135,6 +161,8 @@ export default function NewFacture({ handleStatus }) {
                   id='numFacture'
                   name='numFacture'
                   label='Numéro de Facture'
+                  value={numFact}
+                  onChange={e => setNumFact(e.target.value)}
                   variant='outlined'
                   size='small'
                   fullWidth
@@ -144,12 +172,19 @@ export default function NewFacture({ handleStatus }) {
                 <TextField
                   required
                   id='devise'
-                  name='devise'
+                  select
                   label='Devise'
+                  value={devise}
+                  onChange={e => setDevise(e.target.value)}
                   variant='outlined'
                   size='small'
-                  fullWidth
-                />
+                >
+                  {currencies.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid
                 container
