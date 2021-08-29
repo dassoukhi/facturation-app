@@ -63,11 +63,8 @@ export default function TableFacture() {
   }
 
   const deleteItem = e => {
-    if (articles.length > 1) {
-      const currentArt = [...articles]
-      currentArt.splice(e, 1)
-      setArticles(currentArt)
-    }
+    const currentArt = articles.filter(a => a !== e)
+    setArticles(currentArt)
   }
   return (
     <Table className={classes.table} aria-label='spanning table'>
