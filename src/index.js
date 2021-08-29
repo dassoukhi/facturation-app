@@ -4,13 +4,15 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import userReducer from './features/user'
-import themeReducer from './features/theme'
+import userReducer from './features/userSlice'
+import themeReducer from './features/themeSlice'
+import invoiceSlice from './features/invoceSlice'
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    theme: themeReducer
+    theme: themeReducer,
+    invoice: invoiceSlice
   }
 })
 

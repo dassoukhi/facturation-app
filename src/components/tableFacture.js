@@ -7,6 +7,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Button } from '@material-ui/core'
 import ItemRow from './itemRow'
+import { useDispatch, useSelector } from 'react-redux'
+import { addArticle, deleteArticle } from '../features/invoceSlice'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -56,16 +58,30 @@ const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
 export default function TableFacture() {
   const classes = useStyles()
-  const [articles, setArticles] = useState([0])
+  const currentInvoice = useSelector(state => state.invoice.value)
+  const dispatch = useDispatch()
+  const [counter, setcounter] = useState(1)
 
   const addItem = () => {
-    setArticles([...articles, articles.length])
+    console.log('before redux ', currentInvoice)
+    dispatch(
+      addArticle({
+        id: counter,
+        description: '',
+        quantite: 0,
+        prix: 0.0,
+        tota: 0.0,
+        taxe: 0
+      })
+    )
+    setcounter(counter + 1)
   }
 
   const deleteItem = e => {
-    const currentArt = articles.filter(a => a !== e)
-    setArticles(currentArt)
+    dispatch(deleteArticle(e))
   }
+  console.log('pricipal redux ', currentInvoice)
+
   return (
     <Table className={classes.table} aria-label='spanning table'>
       <TableHead>
@@ -74,13 +90,13 @@ export default function TableFacture() {
           <StyledTableCell align='right'>Quantité</StyledTableCell>
           <StyledTableCell align='right'>Prix</StyledTableCell>
           <StyledTableCell align='right'>Total</StyledTableCell>
-          <StyledTableCell align='right'>Total</StyledTableCell>
+          <StyledTableCell align='right'>Taxe</StyledTableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {articles.map(e => (
+        {currentInvoice.map(e => (
           // eslint-disable-next-line react/jsx-key
-          <ItemRow keyItem={e} deleteItem={() => deleteItem(e)} />
+          <ItemRow keyItem={e.id} deleteItem={() => deleteItem(e.id)} />
         ))}
         <Button
           variant='outlined'
