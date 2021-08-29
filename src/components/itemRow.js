@@ -2,6 +2,14 @@
 import { IconButton, TableCell, TableRow, TextField } from '@material-ui/core'
 import React, { useState } from 'react'
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
+import { useDispatch } from 'react-redux'
+import {
+  changeDescript,
+  changePrix,
+  changeQuantite,
+  changeTaxe,
+  changeTotal
+} from '../features/invoceSlice'
 
 const ItemRow = ({ keyItem, deleteItem }) => {
   const [description, setDescription] = useState('')
@@ -9,6 +17,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
   const [prix, setPrix] = useState('')
   const [total, setTotal] = useState('')
   const [taxe, setTaxe] = useState('')
+  const dispatch = useDispatch()
   console.log(
     'key ',
     keyItem,
@@ -23,7 +32,27 @@ const ItemRow = ({ keyItem, deleteItem }) => {
     'taxe ',
     taxe
   )
+  const handleDescription = e => {
+    setDescription(e.target.value)
+    dispatch(changeDescript({ id: keyItem, value: e.target.value }))
+  }
 
+  const handleQuantite = e => {
+    setQuantite(e.target.value)
+    dispatch(changeQuantite({ id: keyItem, value: e.target.value }))
+  }
+  const handlePrix = e => {
+    setPrix(e.target.value)
+    dispatch(changePrix({ id: keyItem, value: e.target.value }))
+  }
+  const handleTotal = e => {
+    setTotal(e.target.value)
+    dispatch(changeTotal({ id: keyItem, value: e.target.value }))
+  }
+  const handleTaxe = e => {
+    setTaxe(e.target.value)
+    dispatch(changeTaxe({ id: keyItem, value: e.target.value }))
+  }
   return (
     <TableRow key={keyItem}>
       <TableCell>
@@ -33,7 +62,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           label='Description'
           variant='outlined'
           value={description}
-          onChange={e => setDescription(e.target.value)}
+          onChange={handleDescription}
           size='small'
           fullWidth
           style={{ width: '300px' }}
@@ -47,7 +76,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           type='number'
           variant='outlined'
           value={quantite}
-          onChange={e => setQuantite(e.target.value)}
+          onChange={handleQuantite}
           size='small'
           fullWidth
           style={{ width: '150px' }}
@@ -60,7 +89,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           label='Prix'
           variant='outlined'
           value={prix}
-          onChange={e => setPrix(e.target.value)}
+          onChange={handlePrix}
           size='small'
           fullWidth
           style={{ width: '100px' }}
@@ -73,7 +102,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           label='Total'
           variant='outlined'
           value={total}
-          onChange={e => setTotal(e.target.value)}
+          onChange={handleTotal}
           size='small'
           fullWidth
           style={{ width: '100px' }}
@@ -86,7 +115,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           label='Taxe'
           variant='outlined'
           value={taxe}
-          onChange={e => setTaxe(e.target.value)}
+          onChange={handleTaxe}
           size='small'
           fullWidth
           style={{ width: '60px' }}

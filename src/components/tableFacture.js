@@ -85,7 +85,7 @@ export default function TableFacture() {
   return (
     <Table className={classes.table} aria-label='spanning table'>
       <TableHead>
-        <TableRow>
+        <TableRow key='header'>
           <StyledTableCell>Description</StyledTableCell>
           <StyledTableCell align='right'>Quantité</StyledTableCell>
           <StyledTableCell align='right'>Prix</StyledTableCell>
@@ -107,19 +107,19 @@ export default function TableFacture() {
         >
           Ajouter une ligne
         </Button>
-        <TableRow>
+        <TableRow key='stotal'>
           <TableCell rowSpan={4} />
           <TableCell colSpan={3}>Sous-total</TableCell>
           <TableCell align='right'>{ccyFormat(invoiceSubtotal)}</TableCell>
         </TableRow>
-        <TableRow>
+        <TableRow key='taxe'>
           <TableCell colSpan={2}>Taxe</TableCell>
           <TableCell colSpan={1}>{`${(TAX_RATE * 100).toFixed(
             0
           )} %`}</TableCell>
           <TableCell align='right'>{ccyFormat(invoiceTaxes)}</TableCell>
         </TableRow>
-        <TableRow>
+        <TableRow key='total'>
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell align='right'>{ccyFormat(invoiceTotal)}</TableCell>
         </TableRow>

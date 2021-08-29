@@ -100,7 +100,7 @@ export default function NewFacture({ handleStatus }) {
   return (
     <Fragment>
       <Nav>
-        <AppBar position='absolute' color='white' className={classes.appBar}>
+        <AppBar position='absolute' color='default' className={classes.appBar}>
           <Toolbar>
             <div
               style={{
