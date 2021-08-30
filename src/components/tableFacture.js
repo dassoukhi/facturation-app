@@ -63,15 +63,14 @@ export default function TableFacture() {
   const [counter, setcounter] = useState(1)
 
   const addItem = () => {
-    console.log('before redux ', currentInvoice)
     dispatch(
       addArticle({
         id: counter,
         description: '',
-        quantite: 0,
-        prix: 0.0,
-        tota: 0.0,
-        taxe: 0
+        quantite: '',
+        prix: '',
+        total: '',
+        taxe: ''
       })
     )
     setcounter(counter + 1)

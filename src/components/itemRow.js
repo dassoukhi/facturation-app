@@ -13,7 +13,7 @@ import {
 
 const ItemRow = ({ keyItem, deleteItem }) => {
   const [description, setDescription] = useState('')
-  const [quantite, setQuantite] = useState(0)
+  const [quantite, setQuantite] = useState(1)
   const [prix, setPrix] = useState('')
   const [total, setTotal] = useState('')
   const [taxe, setTaxe] = useState('')
@@ -39,16 +39,29 @@ const ItemRow = ({ keyItem, deleteItem }) => {
 
   const handleQuantite = e => {
     setQuantite(e.target.value)
+    if (prix !== '' && !isNaN(prix)) {
+      let qte = new Number(e.target.value)
+      let prx = new Number(prix)
+      let totl = (qte * prx).toFixed(2)
+      setTotal(totl.toString())
+      dispatch(changeTotal({ id: keyItem, value: totl.toString() }))
+    }
     dispatch(changeQuantite({ id: keyItem, value: e.target.value }))
   }
   const handlePrix = e => {
-    setPrix(e.target.value)
-    dispatch(changePrix({ id: keyItem, value: e.target.value }))
+    if (!isNaN(e.target.value)) {
+      setPrix(e.target.value)
+      if (!isNaN(quantite)) {
+        let prx = new Number(e.target.value)
+        let qte = new Number(quantite)
+        let totl = (qte * prx).toFixed(2)
+        setTotal(totl.toString())
+        dispatch(changeTotal({ id: keyItem, value: totl.toString() }))
+      }
+      dispatch(changePrix({ id: keyItem, value: e.target.value }))
+    }
   }
-  const handleTotal = e => {
-    setTotal(e.target.value)
-    dispatch(changeTotal({ id: keyItem, value: e.target.value }))
-  }
+
   const handleTaxe = e => {
     setTaxe(e.target.value)
     dispatch(changeTaxe({ id: keyItem, value: e.target.value }))
@@ -77,9 +90,10 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           variant='outlined'
           value={quantite}
           onChange={handleQuantite}
+          InputProps={{ inputProps: { min: 1 } }}
           size='small'
           fullWidth
-          style={{ width: '150px' }}
+          style={{ width: '100px' }}
         />
       </TableCell>
       <TableCell align='right'>
@@ -92,7 +106,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           onChange={handlePrix}
           size='small'
           fullWidth
-          style={{ width: '100px' }}
+          style={{ width: '150px' }}
         />
       </TableCell>
       <TableCell align='right'>
@@ -102,10 +116,10 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           label='Total'
           variant='outlined'
           value={total}
-          onChange={handleTotal}
+          disabled
           size='small'
           fullWidth
-          style={{ width: '100px' }}
+          style={{ width: '150px' }}
         />
       </TableCell>
       <TableCell align='right'>

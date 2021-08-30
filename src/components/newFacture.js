@@ -18,6 +18,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import TableFacture from './tableFacture'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 function getDate() {
   var today = new Date()
@@ -96,6 +97,27 @@ export default function NewFacture({ handleStatus }) {
   const [client, setClient] = useState('')
   const [numFact, setNumFact] = useState('FACT-' + getDate())
   const [devise, setDevise] = useState('XAF')
+  const currentInvoice = useSelector(state => state.invoice.value)
+
+  function valideInvoice() {
+    let result = client !== ''
+    if (!result) {
+      return result
+    }
+    for (const element of currentInvoice) {
+      if (
+        element.description === '' ||
+        element.quantite === '' ||
+        element.prix === '' ||
+        element.total === ''
+      ) {
+        result = false
+        break
+      }
+    }
+    console.log(result)
+    return result
+  }
 
   return (
     <Fragment>
@@ -125,8 +147,9 @@ export default function NewFacture({ handleStatus }) {
                 <Typography variant='h6' color='inherit' noWrap>
                   <Button
                     variant='contained'
-                    onClick={handleStatus}
-                    color='default'
+                    onClick={valideInvoice}
+                    disabled={!valideInvoice()}
+                    color='primary'
                   >
                     Enregistrer
                   </Button>

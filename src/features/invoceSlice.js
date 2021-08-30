@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialStateValue = [
-  { id: 0, description: '', quantite: 0, prix: 0.0, total: 0.0, taxe: 0 }
+  { id: 0, description: '', quantite: '', prix: '', total: '', taxe: '' }
 ]
 
 export const invoiceSlice = createSlice({
