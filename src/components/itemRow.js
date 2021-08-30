@@ -13,7 +13,7 @@ import {
 
 const ItemRow = ({ keyItem, deleteItem }) => {
   const [description, setDescription] = useState('')
-  const [quantite, setQuantite] = useState(1)
+  const [quantite, setQuantite] = useState(0)
   const [prix, setPrix] = useState('')
   const [total, setTotal] = useState('')
   const [taxe, setTaxe] = useState('')
