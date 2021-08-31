@@ -56,7 +56,7 @@ const invoiceSubtotal = subtotal(rows)
 const invoiceTaxes = TAX_RATE * invoiceSubtotal
 const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
-export default function TableFacture() {
+export default function TableFacture({subTotal, devise, total, taxe, taxPercent}) {
   const classes = useStyles()
   const currentInvoice = useSelector(state => state.invoice.value)
   const dispatch = useDispatch()
@@ -70,7 +70,7 @@ export default function TableFacture() {
         quantite: '',
         prix: '',
         total: '',
-        taxe: ''
+        taxe: '0'
       })
     )
     setcounter(counter + 1)
@@ -109,18 +109,16 @@ export default function TableFacture() {
         <TableRow key='stotal'>
           <TableCell rowSpan={4} />
           <TableCell colSpan={3}>Sous-total</TableCell>
-          <TableCell align='right'>{ccyFormat(invoiceSubtotal)}</TableCell>
+          <TableCell align='right'>{subTotal + " " + devise}</TableCell>
         </TableRow>
         <TableRow key='taxe'>
           <TableCell colSpan={2}>Taxe</TableCell>
-          <TableCell colSpan={1}>{`${(TAX_RATE * 100).toFixed(
-            0
-          )} %`}</TableCell>
-          <TableCell align='right'>{ccyFormat(invoiceTaxes)}</TableCell>
+          <TableCell colSpan={1}>{`${taxPercent} %`}</TableCell>
+          <TableCell align='right'>{taxe+ " " + devise}</TableCell>
         </TableRow>
         <TableRow key='total'>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell align='right'>{ccyFormat(invoiceTotal)}</TableCell>
+          <TableCell align='right'>{total + " " + devise}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

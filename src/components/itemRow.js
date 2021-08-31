@@ -63,8 +63,10 @@ const ItemRow = ({ keyItem, deleteItem }) => {
   }
 
   const handleTaxe = e => {
-    setTaxe(e.target.value)
-    dispatch(changeTaxe({ id: keyItem, value: e.target.value }))
+    if (!isNaN(e.target.value)) {
+      setTaxe(e.target.value)
+      dispatch(changeTaxe({ id: keyItem, value: e.target.value }))
+    }
   }
   return (
     <TableRow key={keyItem}>

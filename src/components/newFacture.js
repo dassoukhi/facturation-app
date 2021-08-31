@@ -39,7 +39,7 @@ const Nav = styled.div`
 `
 const currencies = [
   {
-    value: 'XAF',
+    value: 'CFA',
     label: 'Franc CFA'
   },
   {
@@ -96,15 +96,36 @@ export default function NewFacture({ handleStatus }) {
   }
   const [client, setClient] = useState('')
   const [numFact, setNumFact] = useState('FACT-' + getDate())
-  const [devise, setDevise] = useState('XAF')
+  const [devise, setDevise] = useState('CFA')
   const currentInvoice = useSelector(state => state.invoice.value)
+  var  subTotal = '0.0'
+  var tax = '0.0'
+  var taxPercent = '0'
+  var total = '0.0'
 
   function valideInvoice() {
     let result = client !== ''
     if (!result) {
       return result
     }
+    let subT = 0.0
+    let CurrentTax = 0.0
     for (const element of currentInvoice) {
+      subT= subT + Number(element.total)
+      subTotal = subT.toFixed(2).toString()
+
+      CurrentTax = CurrentTax + (Number(element.taxe) / 100)
+      taxPercent = (CurrentTax * 100).toFixed(0)
+      tax = CurrentTax.toFixed(2).toString()
+      let t = subT * CurrentTax
+      tax = t.toFixed(2).toString()
+
+      let tt = (Number(subTotal) + Number(tax)).toFixed(2)
+      total = tt
+
+      console.log('sub ', subTotal)
+      console.log('tax ', tax)
+      console.log('total ', total)
       if (
         element.description === '' ||
         element.quantite === '' ||
@@ -112,7 +133,7 @@ export default function NewFacture({ handleStatus }) {
         element.total === ''
       ) {
         result = false
-        break
+        
       }
     }
     console.log(result)
@@ -242,7 +263,7 @@ export default function NewFacture({ handleStatus }) {
                 </Grid>
               </Grid>
             </Grid>
-            <TableFacture />
+            <TableFacture subTotal={subTotal} devise={devise} total={total} taxe={tax} taxPercent={taxPercent}/>
           </Paper>
         </MuiPickersUtilsProvider>
       </main>
