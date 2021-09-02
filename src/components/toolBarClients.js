@@ -64,7 +64,7 @@ export default function ToolBarClients() {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static' color='white'>
+      <AppBar position='static' color='default'>
         <Toolbar>
           <Typography className={classes.title} variant='h6' noWrap>
             Clients

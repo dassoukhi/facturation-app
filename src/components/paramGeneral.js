@@ -28,7 +28,7 @@ function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
+      <Link color='inherit' to='https://material-ui.com/'>
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -105,7 +105,7 @@ export default function ParamGeneral() {
     <React.Fragment>
       <CssBaseline />
       <Nav>
-        <AppBar position='absolute' color='white' className={classes.appBar}>
+        <AppBar position='absolute' color='default' className={classes.appBar}>
           <Toolbar>
             <Typography variant='h6' color='inherit' noWrap>
               Paramétre général

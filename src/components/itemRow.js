@@ -9,7 +9,7 @@ import {
   changeQuantite,
   changeTaxe,
   changeTotal
-} from '../features/invoceSlice'
+} from '../features/invoiceSlice'
 
 const ItemRow = ({ keyItem, deleteItem }) => {
   const [description, setDescription] = useState('')
@@ -69,10 +69,10 @@ const ItemRow = ({ keyItem, deleteItem }) => {
     }
   }
   return (
-    <TableRow key={keyItem}>
+    <TableRow>
       <TableCell>
         <TextField
-          id={'description' + keyItem}
+          id={`description${keyItem}`}
           name='description'
           label='Description'
           variant='outlined'
@@ -85,8 +85,8 @@ const ItemRow = ({ keyItem, deleteItem }) => {
       </TableCell>
       <TableCell align='right'>
         <TextField
-          id={'quantité' + keyItem}
-          name='quantité'
+          id={`quantite${keyItem}`}
+          name='quantite'
           label='Quantité'
           type='number'
           variant='outlined'
@@ -100,7 +100,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
       </TableCell>
       <TableCell align='right'>
         <TextField
-          id={'prix' + keyItem}
+          id={`prix${keyItem}`}
           name='prix'
           label='Prix'
           variant='outlined'
@@ -113,7 +113,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
       </TableCell>
       <TableCell align='right'>
         <TextField
-          id={'total' + keyItem}
+          id={`total${keyItem}`}
           name='total'
           label='Total'
           variant='outlined'
@@ -126,7 +126,7 @@ const ItemRow = ({ keyItem, deleteItem }) => {
       </TableCell>
       <TableCell align='right'>
         <TextField
-          id={'taxe' + keyItem}
+          id={`taxe${keyItem}`}
           name='taxe'
           label='Taxe'
           variant='outlined'
@@ -137,14 +137,19 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           style={{ width: '60px' }}
         />
       </TableCell>
+      
       {keyItem === 0 ? (
-        <IconButton disabled style={{ marginTop: '15px' }}>
+        <td>
+          <IconButton disabled >
           <DeleteOutlinedIcon fontSize='small' />
-        </IconButton>
+          </IconButton>
+        </td>
       ) : (
-        <IconButton onClick={deleteItem} style={{ marginTop: '15px' }}>
+        <td>
+          <IconButton onClick={deleteItem} >
           <DeleteOutlinedIcon fontSize='small' />
-        </IconButton>
+          </IconButton>
+        </td>
       )}
     </TableRow>
   )

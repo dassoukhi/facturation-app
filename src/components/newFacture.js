@@ -96,9 +96,7 @@ export default function NewFacture({ handleStatus }) {
     setSelectedDate(date)
   }
   const [client, setClient] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [phone, setPhone] = useState('')
-  // const [adress, setAdress] = useState('')
+  const [open, setOpen] = useState(false)
 
   const [numFact, setNumFact] = useState('FACT-' + getDate())
   const [devise, setDevise] = useState('CFA')
@@ -143,6 +141,11 @@ export default function NewFacture({ handleStatus }) {
     console.log(result)
     return result
   }
+  const changeClient = () => {
+    setOpen(true)
+    
+  }
+  console.log('client :'+ client)
 
   return (
     <Fragment>
@@ -175,6 +178,7 @@ export default function NewFacture({ handleStatus }) {
                     onClick={valideInvoice}
                     disabled={!valideInvoice()}
                     style={{ backgroundColor: '2E99FF' }}
+                    color='primary'
                   >
                     Enregistrer
                   </Button>
@@ -190,19 +194,47 @@ export default function NewFacture({ handleStatus }) {
             <Grid container spacing={3}>
               <Grid item xs={12}></Grid>
               <Grid item xs={12} sm={5}>
-                {/* <TextField
-                  required
-                  id='client'
-                  name='client'
-                  label='Client'
-                  fullWidth
-                  value={client}
-                  onChange={e => setClient(e.target.value)}
-                  size='small'
-                  variant='outlined'
-                  autoComplete='given-name'
-                /> */}
-                <ModalClient />
+                {client === '' ? (
+                  <div>
+                    <Button
+                  variant='contained'
+                  onClick={()=>setOpen(true)}
+                  style={{
+                    width: '250px',
+                    backgroundColor: '#8FBC8F',
+                    textTransform: 'none',
+                    fontSize: '15px'
+                  }}
+                >
+                  Ajouter client
+                </Button>
+                  <ModalClient client={setClient} open={open} setOpen={setOpen}/>
+                  </div>
+                ):
+              <TextField
+                required
+                id='client'
+                name='client'
+                label='Client'
+                fullWidth
+                value='10'
+                select
+                size='small'
+                variant='outlined'
+              >
+                <MenuItem value="10">{client}</MenuItem>
+                <MenuItem value="20">
+                  <Button color='primary' onClick={changeClient} variant='text' style={{textTransform: 'none', width: '100%'}}>
+                    Changer le client
+                    </Button>
+                  </MenuItem>
+              </TextField>
+              }
+
+              {open && <ModalClient client={setClient} open={open} setOpen={setOpen}/>}
+                
+                
+                
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField

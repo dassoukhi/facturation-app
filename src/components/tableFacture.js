@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { Button } from '@material-ui/core'
 import ItemRow from './itemRow'
 import { useDispatch, useSelector } from 'react-redux'
-import { addArticle, deleteArticle } from '../features/invoceSlice'
+import { addArticle, deleteArticle } from '../features/invoiceSlice'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -84,7 +84,7 @@ export default function TableFacture({subTotal, devise, total, taxe, taxPercent}
   return (
     <Table className={classes.table} aria-label='spanning table'>
       <TableHead>
-        <TableRow key='header'>
+        <TableRow key={'headerInvoice'}>
           <StyledTableCell>Description</StyledTableCell>
           <StyledTableCell align='right'>Quantité</StyledTableCell>
           <StyledTableCell align='right'>Prix</StyledTableCell>
@@ -95,9 +95,11 @@ export default function TableFacture({subTotal, devise, total, taxe, taxPercent}
       <TableBody>
         {currentInvoice.map(e => (
           // eslint-disable-next-line react/jsx-key
-          <ItemRow keyItem={e.id} deleteItem={() => deleteItem(e.id)} />
+          <ItemRow key={e.id} keyItem={e.id} deleteItem={() => deleteItem(e.id)} />
         ))}
-        <Button
+        <tr>
+          <td>
+          <Button
           variant='outlined'
           style={{ marginTop: '10px' }}
           size='small'
@@ -106,6 +108,8 @@ export default function TableFacture({subTotal, devise, total, taxe, taxPercent}
         >
           Ajouter une ligne
         </Button>
+          </td>
+        </tr>
         <TableRow key='stotal'>
           <TableCell rowSpan={4} />
           <TableCell colSpan={3}>Sous-total</TableCell>

@@ -66,7 +66,7 @@ export default function ToolBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static' color='white'>
+      <AppBar position='static' color='default'>
         <Toolbar>
           <IconButton
             edge='start'

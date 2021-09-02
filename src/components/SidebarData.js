@@ -21,7 +21,7 @@ export const SidebarData = [
   {
     title: 'Paramétre',
     icon: <SettingsIcon />,
-
+    path: '#',
     iconClosed: <ArrowDropDownIcon />,
     iconOpened: <ArrowDropUpIcon />,
 

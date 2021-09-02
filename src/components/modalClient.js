@@ -6,6 +6,8 @@ import Fade from '@material-ui/core/Fade'
 import { Button, Grid, TextField } from '@material-ui/core'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { addClient } from '../features/clientSlice'
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -22,37 +24,32 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function ModalClient() {
+export default function ModalClient({client, open, setOpen}) {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [siteWeb, setSiteWeb] = useState('')
-  const [adress, setAdress] = useState('')
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
+  const currentClient = useSelector(state => state.client.value)
+  const dispatch = useDispatch()
+  const [name, setName] = useState(currentClient.name)
+  const [email, setEmail] = useState(currentClient.email)
+  const [phone, setPhone] = useState(currentClient.phone)
+  const [siteWeb, setSiteWeb] = useState(currentClient.siteWeb)
+  const [adress, setAdress] = useState(currentClient.adress)
 
   const handleClose = () => {
     setOpen(false)
   }
+  const submitClient = (e) =>{
+    e.preventDefault()
+    client(name)
+    dispatch(addClient({name: name, adress: adress, email: email, phone: phone, siteWeb: siteWeb}))
+    handleClose()
+    
+
+  }
+  console.log('currentClient : ', currentClient)
 
   return (
     <div>
-      <Button
-        variant='contained'
-        onClick={handleOpen}
-        style={{
-          width: '250px',
-          backgroundColor: '#8FBC8F',
-          textTransform: 'none',
-          fontSize: '15px'
-        }}
-      >
-        Ajouter client
-      </Button>
+      
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
@@ -67,7 +64,7 @@ export default function ModalClient() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <form onSubmit={e => e.preventDefault()}>
+            <form onSubmit={submitClient}>
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <button
                   style={{
@@ -76,7 +73,11 @@ export default function ModalClient() {
                     fontSize: '20px',
                     cursor: 'pointer'
                   }}
-                  onClick={handleClose}
+                  onClick = {(e) =>{
+                    e.preventDefault()
+                    handleClose()
+                  }}
+                  // onClick={handleClose}
                 >
                   X
                 </button>
@@ -97,8 +98,7 @@ export default function ModalClient() {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id='name'
-                      name='name'
+                      name='nameModal'
                       label='Nom'
                       fullWidth
                       value={name}
@@ -111,8 +111,7 @@ export default function ModalClient() {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id='email'
-                      name='email'
+                      name='emailModal'
                       label='Email'
                       type='email'
                       value={email}
@@ -129,8 +128,7 @@ export default function ModalClient() {
                   <Grid item xs={12} sm={12}>
                     <TextField
                       required
-                      id='adress'
-                      name='adress'
+                      name='adressModal'
                       label='Adresse'
                       value={adress}
                       onChange={e => setAdress(e.target.value)}
@@ -144,18 +142,7 @@ export default function ModalClient() {
               <div style={{ marginTop: '20px' }}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
-                    {/* <TextField
-                    required
-                    id='phone'
-                    name='phone'
-                    label='Téléphone'
-                    fullWidth
-                    value={phone}
-                    onChange={e => setPhone(e.target.value)}
-                    size='small'
-                    variant='outlined'
-                    autoComplete='given-name'
-                  /> */}
+                   
                     <PhoneInput
                       country={'default'}
                       value={phone}
@@ -170,8 +157,7 @@ export default function ModalClient() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id='siteWeb'
-                      name='siteWeb'
+                      name='siteWebModal'
                       label='Site internet'
                       value={siteWeb}
                       onChange={e => setSiteWeb(e.target.value)}
