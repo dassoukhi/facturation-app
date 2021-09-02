@@ -19,6 +19,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import TableFacture from './tableFacture'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
+import ModalClient from './modalClient'
 
 function getDate() {
   var today = new Date()
@@ -95,10 +96,14 @@ export default function NewFacture({ handleStatus }) {
     setSelectedDate(date)
   }
   const [client, setClient] = useState('')
+  // const [email, setEmail] = useState('')
+  // const [phone, setPhone] = useState('')
+  // const [adress, setAdress] = useState('')
+
   const [numFact, setNumFact] = useState('FACT-' + getDate())
   const [devise, setDevise] = useState('CFA')
   const currentInvoice = useSelector(state => state.invoice.value)
-  var  subTotal = '0.0'
+  var subTotal = '0.0'
   var tax = '0.0'
   var taxPercent = '0'
   var total = '0.0'
@@ -111,10 +116,10 @@ export default function NewFacture({ handleStatus }) {
     let subT = 0.0
     let CurrentTax = 0.0
     for (const element of currentInvoice) {
-      subT= subT + Number(element.total)
+      subT = subT + Number(element.total)
       subTotal = subT.toFixed(2).toString()
 
-      CurrentTax = CurrentTax + (Number(element.taxe) / 100)
+      CurrentTax = CurrentTax + Number(element.taxe) / 100
       taxPercent = (CurrentTax * 100).toFixed(0)
       tax = CurrentTax.toFixed(2).toString()
       let t = subT * CurrentTax
@@ -133,7 +138,6 @@ export default function NewFacture({ handleStatus }) {
         element.total === ''
       ) {
         result = false
-        
       }
     }
     console.log(result)
@@ -170,7 +174,7 @@ export default function NewFacture({ handleStatus }) {
                     variant='contained'
                     onClick={valideInvoice}
                     disabled={!valideInvoice()}
-                    color='primary'
+                    style={{ backgroundColor: '2E99FF' }}
                   >
                     Enregistrer
                   </Button>
@@ -186,7 +190,7 @@ export default function NewFacture({ handleStatus }) {
             <Grid container spacing={3}>
               <Grid item xs={12}></Grid>
               <Grid item xs={12} sm={5}>
-                <TextField
+                {/* <TextField
                   required
                   id='client'
                   name='client'
@@ -197,7 +201,8 @@ export default function NewFacture({ handleStatus }) {
                   size='small'
                   variant='outlined'
                   autoComplete='given-name'
-                />
+                /> */}
+                <ModalClient />
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
@@ -263,7 +268,13 @@ export default function NewFacture({ handleStatus }) {
                 </Grid>
               </Grid>
             </Grid>
-            <TableFacture subTotal={subTotal} devise={devise} total={total} taxe={tax} taxPercent={taxPercent}/>
+            <TableFacture
+              subTotal={subTotal}
+              devise={devise}
+              total={total}
+              taxe={tax}
+              taxPercent={taxPercent}
+            />
           </Paper>
         </MuiPickersUtilsProvider>
       </main>

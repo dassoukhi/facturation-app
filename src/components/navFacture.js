@@ -82,7 +82,9 @@ const NavFacture = ({search, setSearch, handleStatus}) => {
           variant='contained'
           style={{
             backgroundColor: '#2E99FF',
-            color: '#ffff'
+            color: '#ffff',
+            textTransform: 'none',
+            fontSize: '15px'
           }}
           onClick={handleStatus}
         >
