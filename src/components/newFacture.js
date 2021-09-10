@@ -2,6 +2,7 @@
 import React, { Fragment, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
+import { useHistory } from "react-router-dom";
 import {
   AppBar,
   Button,
@@ -105,6 +106,11 @@ export default function NewFacture({ handleStatus }) {
   var tax = '0.0'
   var taxPercent = '0'
   var total = '0.0'
+  const history = useHistory()
+
+  const generateInvoice = () =>{
+    history.push('/factures/generateinvoice')
+  }
 
   function valideInvoice() {
     let result = client !== ''
@@ -175,7 +181,7 @@ export default function NewFacture({ handleStatus }) {
                 <Typography variant='h6' color='inherit' noWrap>
                   <Button
                     variant='contained'
-                    onClick={valideInvoice}
+                    onClick={generateInvoice}
                     disabled={!valideInvoice()}
                     style={{ backgroundColor: '2E99FF' }}
                     color='primary'

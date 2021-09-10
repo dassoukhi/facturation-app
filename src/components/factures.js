@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { clearClient } from '../features/clientSlice'
@@ -12,6 +12,11 @@ export default function Factures() {
   const [createStatus, setCreateStatus] = useState(false)
   const dispatch = useDispatch()
 
+  useEffect(()=>{
+    dispatch(clearClient())
+    dispatch(resetAll())
+  }, [])
+  
   const handleStatus = () => {
     setCreateStatus(!createStatus)
     dispatch(resetAll())
