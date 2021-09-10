@@ -137,17 +137,17 @@ const ItemRow = ({ keyItem, deleteItem }) => {
           style={{ width: '60px' }}
         />
       </TableCell>
-      
+
       {keyItem === 0 ? (
         <td>
-          <IconButton disabled >
-          <DeleteOutlinedIcon fontSize='small' />
+          <IconButton disabled>
+            <DeleteOutlinedIcon fontSize='small' />
           </IconButton>
         </td>
       ) : (
         <td>
-          <IconButton onClick={deleteItem} >
-          <DeleteOutlinedIcon fontSize='small' />
+          <IconButton onClick={deleteItem}>
+            <DeleteOutlinedIcon fontSize='small' />
           </IconButton>
         </td>
       )}

@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialStateValue = 
-  {  name: '', adress: '', email: '', phone: '', siteWeb: '' }
-
+const initialStateValue = {
+  name: '',
+  adress: '',
+  email: '',
+  phone: '',
+  siteWeb: ''
+}
 
 export const clientSlice = createSlice({
   name: 'client',
@@ -17,9 +21,6 @@ export const clientSlice = createSlice({
   }
 })
 
-export const {
-  addClient,
-  clearClient
-} = clientSlice.actions
+export const { addClient, clearClient } = clientSlice.actions
 
 export default clientSlice.reducer

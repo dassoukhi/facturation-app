@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function ModalClient({client, open, setOpen}) {
+export default function ModalClient({ client, open, setOpen }) {
   const classes = useStyles()
   const currentClient = useSelector(state => state.client.value)
   const dispatch = useDispatch()
@@ -37,19 +38,24 @@ export default function ModalClient({client, open, setOpen}) {
   const handleClose = () => {
     setOpen(false)
   }
-  const submitClient = (e) =>{
+  const submitClient = e => {
     e.preventDefault()
     client(name)
-    dispatch(addClient({name: name, adress: adress, email: email, phone: phone, siteWeb: siteWeb}))
+    dispatch(
+      addClient({
+        name: name,
+        adress: adress,
+        email: email,
+        phone: phone,
+        siteWeb: siteWeb
+      })
+    )
     handleClose()
-    
-
   }
   console.log('currentClient : ', currentClient)
 
   return (
     <div>
-      
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
@@ -73,7 +79,7 @@ export default function ModalClient({client, open, setOpen}) {
                     fontSize: '20px',
                     cursor: 'pointer'
                   }}
-                  onClick = {(e) =>{
+                  onClick={e => {
                     e.preventDefault()
                     handleClose()
                   }}
@@ -142,7 +148,6 @@ export default function ModalClient({client, open, setOpen}) {
               <div style={{ marginTop: '20px' }}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
-                   
                     <PhoneInput
                       country={'default'}
                       value={phone}
