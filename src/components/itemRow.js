@@ -9,7 +9,7 @@ import {
   changeQuantite,
   changeTaxe,
   changeTotal
-} from '../features/invoiceSlice'
+} from '../features/articleSlice'
 
 const ItemRow = ({ keyItem, deleteItem }) => {
   const [description, setDescription] = useState('')

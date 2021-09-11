@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { clearClient } from '../features/clientSlice'
-import { resetAll } from '../features/invoiceSlice'
+import { resetAll } from '../features/articleSlice'
+import { clearInvoice } from '../features/invoiceSlice'
 import ListeFactures from './listeFactures'
 import NavFacture from './navFacture'
 import NewFacture from './newFacture'
@@ -12,15 +13,17 @@ export default function Factures() {
   const [createStatus, setCreateStatus] = useState(false)
   const dispatch = useDispatch()
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(clearClient())
     dispatch(resetAll())
+    dispatch(clearInvoice())
   }, [])
-  
+
   const handleStatus = () => {
     setCreateStatus(!createStatus)
     dispatch(resetAll())
     dispatch(clearClient())
+    dispatch(clearInvoice())
   }
 
   return (

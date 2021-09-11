@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { Button } from '@material-ui/core'
 import ItemRow from './itemRow'
 import { useDispatch, useSelector } from 'react-redux'
-import { addArticle, deleteArticle } from '../features/invoiceSlice'
+import { addArticle, deleteArticle } from '../features/articleSlice'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -36,7 +36,7 @@ export default function TableFacture({
   taxPercent
 }) {
   const classes = useStyles()
-  const currentInvoice = useSelector(state => state.invoice.value)
+  const currentArticles = useSelector(state => state.article.value)
   const dispatch = useDispatch()
   const [counter, setcounter] = useState(1)
 
@@ -57,7 +57,7 @@ export default function TableFacture({
   const deleteItem = e => {
     dispatch(deleteArticle(e))
   }
-  console.log('pricipal redux ', currentInvoice)
+  console.log('pricipal redux ', currentArticles)
 
   return (
     <Table className={classes.table} aria-label='spanning table'>
@@ -71,7 +71,7 @@ export default function TableFacture({
         </TableRow>
       </TableHead>
       <TableBody>
-        {currentInvoice.map(e => (
+        {currentArticles.map(e => (
           // eslint-disable-next-line react/jsx-key
           <ItemRow
             key={e.id}

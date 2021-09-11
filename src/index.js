@@ -8,12 +8,14 @@ import userReducer from './features/userSlice'
 import themeReducer from './features/themeSlice'
 import invoiceSlice from './features/invoiceSlice'
 import clientSlice from './features/clientSlice'
+import articleSlice from './features/articleSlice'
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     theme: themeReducer,
     invoice: invoiceSlice,
+    article: articleSlice,
     client: clientSlice
   }
 })

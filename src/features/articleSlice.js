@@ -4,8 +4,8 @@ const initialStateValue = [
   { id: 0, description: '', quantite: '', prix: '', total: '', taxe: '0' }
 ]
 
-export const invoiceSlice = createSlice({
-  name: 'invoice',
+export const articleSlice = createSlice({
+  name: 'article',
   initialState: { value: initialStateValue },
   reducers: {
     addArticle: (state, action) => {
@@ -72,6 +72,6 @@ export const {
   changePrix,
   changeTotal,
   changeTaxe
-} = invoiceSlice.actions
+} = articleSlice.actions
 
-export default invoiceSlice.reducer
+export default articleSlice.reducer

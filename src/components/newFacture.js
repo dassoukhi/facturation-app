@@ -2,7 +2,7 @@
 import React, { Fragment, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 import {
   AppBar,
   Button,
@@ -19,8 +19,9 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import TableFacture from './tableFacture'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import ModalClient from './modalClient'
+import { addInvoice } from '../features/invoiceSlice'
 
 function getDate() {
   var today = new Date()
@@ -92,23 +93,39 @@ const useStyles = makeStyles(theme => ({
 
 export default function NewFacture({ handleStatus }) {
   const classes = useStyles()
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  const handleDateChange = date => {
-    setSelectedDate(date)
+  const [selectedDateEch, setSelectedDateEch] = useState(new Date())
+  const [selectedDateFact, setSelectedDateFact] = useState(new Date())
+  const handleDateChangeEcha = date => {
+    setSelectedDateEch(date)
+  }
+  const handleDateChangeFact = date => {
+    setSelectedDateFact(date)
   }
   const [client, setClient] = useState('')
   const [open, setOpen] = useState(false)
 
   const [numFact, setNumFact] = useState('FACT-' + getDate())
   const [devise, setDevise] = useState('CFA')
-  const currentInvoice = useSelector(state => state.invoice.value)
+  const currentArticles = useSelector(state => state.article.value)
+  const dispatch = useDispatch()
   var subTotal = '0.0'
   var tax = '0.0'
   var taxPercent = '0'
   var total = '0.0'
   const history = useHistory()
 
-  const generateInvoice = () =>{
+  const generateInvoice = () => {
+    dispatch(
+      addInvoice({
+        numFacture: numFact,
+        dateDebut: selectedDateFact.toLocaleDateString(),
+        dateEcheance: selectedDateEch.toLocaleDateString(),
+        devise: devise,
+        total: total,
+        HT: subTotal,
+        taxe: taxPercent
+      })
+    )
     history.push('/factures/generateinvoice')
   }
 
@@ -119,7 +136,7 @@ export default function NewFacture({ handleStatus }) {
     }
     let subT = 0.0
     let CurrentTax = 0.0
-    for (const element of currentInvoice) {
+    for (const element of currentArticles) {
       subT = subT + Number(element.total)
       subTotal = subT.toFixed(2).toString()
 
@@ -299,8 +316,8 @@ export default function NewFacture({ handleStatus }) {
                     margin='normal'
                     id='date-creation'
                     label='Date de la création'
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    value={selectedDateFact}
+                    onChange={handleDateChangeFact}
                   />
                 </Grid>
                 <Grid item xs={1} sm={4}>
@@ -311,8 +328,8 @@ export default function NewFacture({ handleStatus }) {
                     margin='normal'
                     id='date-echance'
                     label="Date d'échéance"
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    value={selectedDateEch}
+                    onChange={handleDateChangeEcha}
                   />
                 </Grid>
               </Grid>
