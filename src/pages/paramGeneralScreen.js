@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import NavBar from '../components/navBar'
 import ParamGeneral from '../components/paramGeneral'
+import Sidebar from '../components/Sidebar'
 
 const Cont = styled.div`
   display: block;
@@ -11,11 +12,14 @@ const Cont = styled.div`
 `
 const ParamGeneralScreen = () => {
   return (
-    <div className='factures'>
-      <NavBar />
-      <Cont>
-        <ParamGeneral />
-      </Cont>
+    <div className='appContainer'>
+      <Sidebar />
+      <div className='factures'>
+        <NavBar />
+        <Cont>
+          <ParamGeneral />
+        </Cont>
+      </div>
     </div>
   )
 }

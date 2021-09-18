@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
 import { SidebarData } from './SidebarData'
 import SubMenu from './SubMenu'
@@ -14,9 +15,12 @@ const NavIcon = styled.div`
 
 const SidebarNav = styled.div`
   background: #000131;
-  width: 200px;
+  width: calc(1px + 15vw);
   height: 100vh;
   display: flex;
+  @media (max-width: 990px) {
+    display: none;
+  }
   justify-content: center;
   position: relative;
   top: 0;
@@ -30,12 +34,20 @@ const SidebarWrap = styled.div`
 `
 
 const Sidebar = () => {
+  const user = localStorage.getItem('user')
+  const history = useHistory()
+  console.log('user : ', user)
+  if (!user) {
+    history.push('/')
+  }
   return (
     <>
       <SidebarNav sidebar={null}>
         <SidebarWrap>
           <NavIcon to='#'>
-            <span style={{ color: '#fafafa' }}>Dass~olution</span>
+            <span style={{ color: '#fafafa', fontSize: 'calc(5px + 1.6vw)' }}>
+              Dass~olution
+            </span>
           </NavIcon>
           {SidebarData.map((item, index) => {
             return <SubMenu item={item} key={index} />

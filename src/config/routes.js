@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import FacturesScreen from '../pages/facturesScreen'
 import ClientsScreen from '../pages/clientsScreen'
 import EntrepriseParamScreen from '../pages/entrepriseParamScreen'
@@ -11,12 +10,10 @@ import HomeScreen from '../pages/homeScreen'
 function Routes() {
   const user = localStorage.getItem('user')
   console.log('user : ', user)
-  if (!user) {
-    return <HomeScreen />
-  }
+
   return (
     <Router>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className='RoutesContainer'>
         <Switch>
           <Route path='/' exact component={HomeScreen} />

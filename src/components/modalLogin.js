@@ -4,7 +4,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import { Button, Grid, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
+import axios from 'axios'
+import MessageError from './messageError'
+import { useHistory } from 'react-router'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -18,7 +22,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3),
     borderRadius: '12px',
     outline: 'none',
-    width: '500px'
+    justifyItems: 'center',
+    alignItems: 'center',
+    width: 'calc(40px + 60vw)'
   }
 }))
 
@@ -26,11 +32,32 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
   const classes = useStyles()
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
+  const [isError, setIsError] = useState(false)
+  const [messageError, setMessageError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
+  const user = localStorage.getItem('user')
+  console.log('user Login : ', user)
 
   const submitConnexion = e => {
+    setLoading(true)
     e.preventDefault()
-
-    handleCloseLogin()
+    axios
+      .post('/organisations/login', { email: email, password: password })
+      .then(response => {
+        console.log(JSON.stringify(response.data))
+        localStorage.setItem('user', JSON.stringify(response.data))
+        setLoading(false)
+        history.push('/factures')
+      })
+      .catch(err => {
+        if (err.response) {
+          setIsError(true)
+          setMessageError(err.response.data.error)
+          setLoading(false)
+          console.log(err.response.data.error)
+        }
+      })
   }
 
   return (
@@ -66,57 +93,76 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   X
                 </button>
               </div>
+
               <div
                 style={{
                   justifyContent: 'center',
+                  alignItems: 'center',
                   display: 'flex',
-                  height: '50px'
+                  height: 'calc(10px + 5.5vw)'
                 }}
               >
-                <span style={{ fontSize: '30px', fontFamily: 'initial' }}>
+                <span
+                  style={{
+                    fontSize: 'calc(5px + 2.5vw)',
+                    fontFamily: 'initial'
+                  }}
+                >
                   Connectez à votre compte
                 </span>
               </div>
-              <div style={{ marginTop: '20px' }}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      required
-                      name='emailModal'
-                      label='Email'
-                      type='email'
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      variant='outlined'
-                      size='small'
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
+              {isError && <MessageError message={messageError} />}
+              {loading && (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress />
+                </div>
+              )}
+              <div
+                style={{
+                  marginTop: 'calc(5px + 0.5vw)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  justifyItems: 'center'
+                }}
+              >
+                <TextField
+                  required
+                  name='emailModal'
+                  label='Email'
+                  type='email'
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  variant='outlined'
+                  size='small'
+                  style={{ width: 'calc(65px + 40vw)' }}
+                />
               </div>
-              <div style={{ marginTop: '20px' }}>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      required
-                      name='passwordModal'
-                      label='Mot de passe'
-                      type='password'
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}
-                      variant='outlined'
-                      size='small'
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
+              <div
+                style={{
+                  display: 'flex',
+                  marginTop: 'calc(5px + 1.5vw)',
+                  justifyContent: 'center',
+                  justifyItems: 'center'
+                }}
+              >
+                <TextField
+                  required
+                  name='passwordModal'
+                  label='Mot de passe'
+                  type='password'
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  variant='outlined'
+                  size='small'
+                  style={{ width: 'calc(65px + 40vw)' }}
+                />
               </div>
 
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
-                  marginTop: '30px'
+                  marginTop: 'calc(10px + 2vw)'
                 }}
               >
                 <Button

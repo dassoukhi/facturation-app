@@ -5,12 +5,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import { Button, Grid, TextField } from '@material-ui/core'
-import PhoneInput from 'react-phone-input-2'
+import { Button, CircularProgress, TextField } from '@material-ui/core'
 import 'react-phone-input-2/lib/style.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { addClient } from '../features/clientSlice'
-
+import axios from 'axios'
+import MessageError from './messageError'
+import { useHistory } from 'react-router'
 const useStyles = makeStyles(theme => ({
   modal: {
     display: 'flex',
@@ -22,34 +21,59 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     borderRadius: '12px',
-    outline: 'none'
+    outline: 'none',
+    justifyItems: 'center',
+    alignItems: 'center',
+    width: 'calc(60px + 60vw)'
   }
 }))
 
 export default function ModalRegister({ openRegister, handleCloseRegister }) {
   const classes = useStyles()
-  const currentClient = useSelector(state => state.client.value)
-  const dispatch = useDispatch()
-  const [name, setName] = useState(currentClient.name)
-  const [email, setEmail] = useState(currentClient.email)
-  const [phone, setPhone] = useState(currentClient.phone)
-  const [siteWeb, setSiteWeb] = useState(currentClient.siteWeb)
-  const [adress, setAdress] = useState(currentClient.adress)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordSame, setPasswordSame] = useState('')
+  const [isError, setIsError] = useState(false)
+  const [messageError, setMessageError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
+  const user = localStorage.getItem('user')
+  console.log('user resgister : ', user)
 
   const submitClient = e => {
+    setLoading(true)
     e.preventDefault()
-    dispatch(
-      addClient({
-        name: name,
-        adress: adress,
-        email: email,
-        phone: phone,
-        siteWeb: siteWeb
-      })
-    )
-    handleCloseRegister()
+    if (password === passwordSame) {
+      axios
+        .post('/organisations/register', {
+          nom: name,
+          email: email,
+          password: password
+        })
+        .then(response => {
+          console.log(response.data)
+          console.log(JSON.stringify(response.data))
+          try {
+            localStorage.setItem('user', JSON.stringify(response.data))
+            setLoading(false)
+            history.push('/factures')
+          } catch (error) {
+            alert(error)
+          }
+        })
+        .catch(err => {
+          setLoading(false)
+          setIsError(true)
+          setMessageError(err.response.data.error)
+          console.log(err.response.data)
+        })
+    } else {
+      setLoading(false)
+      setIsError(true)
+      setMessageError('Les mots de passe doivent être identiques')
+    }
   }
-  console.log('currentClient : ', currentClient)
 
   return (
     <div>
@@ -80,7 +104,6 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                     e.preventDefault()
                     handleCloseRegister()
                   }}
-                  // onClick={handleClose}
                 >
                   X
                 </button>
@@ -88,93 +111,114 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
               <div
                 style={{
                   justifyContent: 'center',
+                  alignItems: 'center',
                   display: 'flex',
-                  height: '50px'
+                  height: 'calc(10px + 5.5vw)'
                 }}
               >
-                <span style={{ fontSize: '30px', fontFamily: 'initial' }}>
+                <span
+                  style={{
+                    fontSize: 'calc(5px + 2.5vw)',
+                    fontFamily: 'initial'
+                  }}
+                >
                   Créez votre compte
                 </span>
               </div>
-              <div style={{ marginTop: '10px' }}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name='nameModal'
-                      label='Nom'
-                      fullWidth
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                      size='small'
-                      variant='outlined'
-                      autoComplete='given-name'
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name='emailModal'
-                      label='Email'
-                      type='email'
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      variant='outlined'
-                      size='small'
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
-              </div>
-              <div style={{ marginTop: '20px' }}>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      required
-                      name='adressModal'
-                      label='Adresse'
-                      value={adress}
-                      onChange={e => setAdress(e.target.value)}
-                      variant='outlined'
-                      size='small'
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
-              </div>
-              <div style={{ marginTop: '20px' }}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
-                    <PhoneInput
-                      country={'default'}
-                      value={phone}
-                      onChange={e => setPhone(e)}
-                      placeholder='Numéro de téléphone'
-                      containerStyle={{ width: '20px' }}
-                      inputStyle={{
-                        width: '220px',
-                        height: '40px'
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name='siteWebModal'
-                      label='Site internet'
-                      value={siteWeb}
-                      onChange={e => setSiteWeb(e.target.value)}
-                      variant='outlined'
-                      size='small'
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
+              {isError && <MessageError message={messageError} />}
+              {loading && (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress />
+                </div>
+              )}
+              <div
+                style={{
+                  marginTop: 'calc(5px + 0.5vw)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  justifyItems: 'center'
+                }}
+              >
+                <TextField
+                  required
+                  name='nameModal'
+                  label='Nom'
+                  fullWidth
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  size='small'
+                  variant='outlined'
+                  autoComplete='given-name'
+                  style={{ width: 'calc(65px + 40vw)' }}
+                />
               </div>
               <div
                 style={{
+                  marginTop: 'calc(5px + 0.5vw)',
                   display: 'flex',
                   justifyContent: 'center',
-                  marginTop: '30px'
+                  justifyItems: 'center'
+                }}
+              >
+                <TextField
+                  required
+                  name='emailModal'
+                  label='Email'
+                  type='email'
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  variant='outlined'
+                  size='small'
+                  style={{ width: 'calc(65px + 40vw)' }}
+                />
+              </div>
+              <div
+                style={{
+                  marginTop: 'calc(5px + 0.5vw)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  justifyItems: 'center'
+                }}
+              >
+                <TextField
+                  required
+                  name='password'
+                  label='Mot de passe'
+                  type='password'
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  variant='outlined'
+                  size='small'
+                  style={{ width: 'calc(65px + 40vw)' }}
+                />
+              </div>
+              <div
+                style={{
+                  marginTop: 'calc(5px + 0.5vw)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  justifyItems: 'center'
+                }}
+              >
+                <TextField
+                  required
+                  name='password'
+                  label='Confirmer mot de passe'
+                  type='password'
+                  value={passwordSame}
+                  onChange={e => setPasswordSame(e.target.value)}
+                  variant='outlined'
+                  size='small'
+                  style={{ width: 'calc(65px + 40vw)' }}
+                />
+              </div>
+
+              <div
+                style={{
+                  marginTop: 'calc(5px + 0.5vw)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  justifyItems: 'center'
                 }}
               >
                 <Button

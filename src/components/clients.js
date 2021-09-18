@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { alpha, makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import SearchIcon from '@material-ui/icons/Search'
@@ -6,6 +6,7 @@ import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined'
 import { Button, InputBase } from '@material-ui/core'
 import ListeClients from './listeClients'
 import { useState } from 'react'
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,6 +55,14 @@ const useStyles = makeStyles(theme => ({
 export default function Clients() {
   const classes = useStyles()
   const [input, setinput] = useState('')
+  const [clientList, setClientList] = useState([])
+  const user = JSON.parse(localStorage.getItem('user'))
+  useEffect(() => {
+    axios
+      .get('/organisations/' + user.id)
+      .then(response => setClientList(response.data.clients))
+      .catch(err => console.log(err))
+  }, [])
 
   return (
     <Paper className={classes.root}>
@@ -115,7 +124,7 @@ export default function Clients() {
           />
         </div>
       </div>
-      <ListeClients search={input} />
+      <ListeClients search={input} clientList={clientList} />
     </Paper>
   )
 }

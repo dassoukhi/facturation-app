@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import NavBar from '../components/navBar'
 import EntrepriseParam from '../components/entrepriseParam'
+import Sidebar from '../components/Sidebar'
 
 const Cont = styled.div`
   display: block;
@@ -11,11 +12,14 @@ const Cont = styled.div`
 `
 const EntrepriseParamScreen = () => {
   return (
-    <div className='factures'>
-      <NavBar />
-      <Cont>
-        <EntrepriseParam />
-      </Cont>
+    <div className='appContainer'>
+      <Sidebar />
+      <div className='factures'>
+        <NavBar />
+        <Cont>
+          <EntrepriseParam />
+        </Cont>
+      </div>
     </div>
   )
 }

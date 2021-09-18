@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import NavBar from '../components/navBar'
 import Clients from '../components/clients'
+import Sidebar from '../components/Sidebar'
 
 const Cont = styled.div`
   display: block;
@@ -11,11 +12,14 @@ const Cont = styled.div`
 `
 const ClientsScreen = () => {
   return (
-    <div className='clients'>
-      <NavBar />
-      <Cont>
-        <Clients />
-      </Cont>
+    <div className='appContainer'>
+      <Sidebar />
+      <div className='clients'>
+        <NavBar />
+        <Cont>
+          <Clients />
+        </Cont>
+      </div>
     </div>
   )
 }

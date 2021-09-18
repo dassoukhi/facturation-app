@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React from 'react'
@@ -42,7 +43,7 @@ const DisplayInvoice = () => {
           display: 'flex',
           justifyContent: 'flex-start',
           marginRight: '30px',
-          marginBottom: '400px'
+          marginBottom: 'calc(400px - 10vh)'
         }}
       >
         <IconButton onClick={backTo}>
@@ -61,11 +62,15 @@ const DisplayInvoice = () => {
       )}
       {!instance.loading && (
         <PDFViewer
-          width='60%'
           height='100%'
           className='app'
           showToolbar={false}
-          style={{ border: 'none' }}
+          className='viewpdf'
+          // style={{
+          //   border: 'none',
+          //   width: 'calc(40px + 60.5vw)',
+          //   height: 'calc(20px + 95vh)'
+          // }}
         >
           <Invoice
             client={currentClient}
@@ -79,7 +84,7 @@ const DisplayInvoice = () => {
           display: 'flex',
           justifyContent: 'flex-start',
           marginLeft: '30px',
-          marginBottom: '400px'
+          marginBottom: 'calc(400px - 10vh)'
         }}
       >
         <PDFDownloadLink

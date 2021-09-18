@@ -24,46 +24,20 @@ const columns = [
     id: 'email',
     label: 'Email',
     minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString('en-US')
+    align: 'right'
   },
   {
     id: 'telephone',
     label: 'Téléphone',
     minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString('en-US')
+    align: 'right'
   },
   {
-    id: 'siteWeb',
+    id: 'site_internet',
     label: 'Site internet',
     minWidth: 170,
-    align: 'right',
-    format: value => value.toFixed(2)
+    align: 'right'
   }
-]
-
-function createData(nom, adresse, email, telephone) {
-  const siteWeb = email / telephone
-  return { nom, adresse, email, telephone, siteWeb }
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767)
 ]
 
 const useStyles = makeStyles({
@@ -72,9 +46,11 @@ const useStyles = makeStyles({
   }
 })
 
-export default function ListeClients({ search }) {
+export default function ListeClients({ search, clientList }) {
   const classes = useStyles()
   console.log('input in liste: ' + search)
+  console.log('ClientList: ' + clientList)
+
   return (
     <TableContainer className={classes.container}>
       <Table stickyHeader aria-label='sticky table'>
@@ -92,24 +68,20 @@ export default function ListeClients({ search }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows
-            .filter(e => e.nom.toLowerCase().startsWith(search.toLowerCase()))
-            .map(row => {
-              return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.nom}>
-                  {columns.map(column => {
-                    const value = row[column.id]
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
+          {clientList.map(row => {
+            return (
+              <TableRow hover role='checkbox' tabIndex={-1} key={row.nom}>
+                {columns.map(column => {
+                  const value = row[column.id]
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {value}
+                    </TableCell>
+                  )
+                })}
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>
