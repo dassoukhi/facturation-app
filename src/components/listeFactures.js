@@ -49,7 +49,17 @@ const columns = [
     id: 'etat',
     label: 'État',
     minWidth: 170,
-    align: 'right'
+    align: 'right',
+    format: etat => {
+      if (String(etat).toLocaleLowerCase() === 'confirm') {
+        return 'Confirmé'
+      }
+      if (etat == 'paye') {
+        return 'Payé'
+      } else {
+        return 'Annulé'
+      }
+    }
   }
 ]
 

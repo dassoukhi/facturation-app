@@ -22,6 +22,7 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import ModalClient from './modalClient'
 import { addInvoice } from '../features/invoiceSlice'
+import axios from 'axios'
 
 function getDate() {
   var today = new Date()
@@ -103,10 +104,11 @@ export default function NewFacture({ handleStatus }) {
   }
   const [client, setClient] = useState('')
   const [open, setOpen] = useState(false)
-
   const [numFact, setNumFact] = useState('FACT-' + getDate())
   const [devise, setDevise] = useState('CFA')
   const currentArticles = useSelector(state => state.article.value)
+  const currentClient = useSelector(state => state.client.value)
+  const user = JSON.parse(localStorage.getItem('user'))
   const dispatch = useDispatch()
   var subTotal = '0.0'
   var tax = '0.0'
@@ -126,6 +128,56 @@ export default function NewFacture({ handleStatus }) {
         taxe: taxPercent
       })
     )
+    if (currentClient.name !== '' && user) {
+      //create client
+      axios
+        .post('/clients', {
+          nom: currentClient.name,
+          adresse: currentClient.adress,
+          email: currentClient.email,
+          telephone: currentClient.phone,
+          site_internet: currentClient.siteWeb,
+          organisation_id: user.id
+        })
+        .then(res => {
+          console.log(res.data)
+          axios
+            .post('/factures', {
+              num_facture: numFact,
+              devise: devise,
+              date_echeance: selectedDateEch,
+              date_debut: selectedDateFact,
+              description: '',
+              total: total,
+              taxe: taxPercent,
+              ht: subTotal,
+              etat: 'Confirm',
+              client_id: res.data.id,
+              client_name: res.data.nom,
+              organisation_id: user.id
+            })
+            .then(result => {
+              console.log(result.data)
+              for (const article of currentArticles) {
+                axios
+                  .post('/articles', {
+                    description: article.description,
+                    quantite: article.quantite,
+                    prix: article.prix,
+                    total: article.total,
+                    taxe: article.taxe,
+                    facture_id: result.data.id
+                  })
+                  .then(resultat => {
+                    console.log('article', resultat.data)
+                  })
+                  .catch(err => console.error(err))
+              }
+            })
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+    }
     history.push('/factures/generateinvoice')
   }
 
