@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -7,6 +7,8 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import { Button } from '@material-ui/core'
+import StatusInvoice from './statusInvoice'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -52,12 +54,12 @@ const columns = [
     align: 'right',
     format: etat => {
       if (String(etat).toLocaleLowerCase() === 'confirm') {
-        return 'Confirmé'
+        return 'Confirmée'
       }
-      if (etat == 'paye') {
-        return 'Payé'
+      if (etat == 'paid') {
+        return 'Payée'
       } else {
-        return 'Annulé'
+        return 'Annulée'
       }
     }
   }
@@ -112,9 +114,32 @@ export default function ListeFactures({ search, invoicesList }) {
                       : row[column.id]
                   return (
                     <TableCell key={column.id} align={column.align}>
-                      {column.format || typeof value === 'number'
-                        ? column.format(value)
-                        : value}
+                      {column.id === 'etat' && (
+                        <StatusInvoice
+                          status={column.format(value)}
+                          invoice_id={row.id}
+                        />
+                      )}
+                      {column.id === 'num_facture' && (
+                        <Button
+                          color='primary'
+                          style={{
+                            textTransform: 'none',
+                            marginRight: '-13px'
+                          }}
+                        >
+                          {column.format || typeof value === 'number'
+                            ? column.format(value)
+                            : value}
+                        </Button>
+                      )}
+                      {column.id !== 'etat' && column.id !== 'num_facture' && (
+                        <>
+                          {column.format || typeof value === 'number'
+                            ? column.format(value)
+                            : value}
+                        </>
+                      )}
                     </TableCell>
                   )
                 })}

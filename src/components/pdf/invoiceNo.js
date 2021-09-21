@@ -33,7 +33,7 @@ const InvoiceNo = ({ invoice }) => (
       <Text>{invoice.dateDebut}</Text>
     </View>
     <View style={styles.invoiceDateContainer}>
-      <Text style={styles.label}>Date de paiement: </Text>
+      <Text style={styles.label}>Date d'échéance: </Text>
       <Text>{invoice.dateEcheance}</Text>
     </View>
   </Fragment>

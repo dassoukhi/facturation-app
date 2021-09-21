@@ -26,6 +26,8 @@ const useStyles = makeStyles(theme => ({
 export default function ToolBar() {
   const classes = useStyles()
   const history = useHistory()
+  const user = JSON.parse(localStorage.getItem('user'))
+  console.log('use', user)
 
   return (
     <div className={classes.root}>
@@ -44,7 +46,7 @@ export default function ToolBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant='h6' noWrap>
-            Nom entreprise
+            {user && user.name}
           </Typography>
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
