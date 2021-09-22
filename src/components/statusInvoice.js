@@ -75,7 +75,6 @@ export default function StatusInvoice({ status, invoice_id }) {
   const [open, setOpen] = React.useState(false)
   const [selectedValue, setSelectedValue] = React.useState(status)
   const classes = useStyles()
-  console.log('value', selectedValue)
   console.log('invoice_id', invoice_id)
 
   const getColor = c => {
@@ -100,22 +99,19 @@ export default function StatusInvoice({ status, invoice_id }) {
     }
     if (value === 'Confirmée') {
       senderValue = 'confirm'
-    } else {
+    }
+    if (value === 'Annulée') {
       senderValue = 'cancel'
     }
+
+    console.log('Value :', senderValue, 'val:', value)
+
     axios
-      .get('/factures/' + invoice_id)
-      .then(result => {
-        console.log(result.data)
-        let invoice = (result.data.etat = senderValue)
-        axios
-          .put('/factures/' + invoice_id, invoice)
-          .then(res => {
-            console.log(res.data)
-            setOpen(false)
-            setSelectedValue(value)
-          })
-          .catch(err => console.error(err))
+      .put('/factures/' + invoice_id, { etat: senderValue })
+      .then(res => {
+        console.log(res.data)
+        setOpen(false)
+        setSelectedValue(value)
       })
       .catch(err => console.error(err))
   }
