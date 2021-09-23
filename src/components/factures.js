@@ -16,13 +16,17 @@ export default function Factures() {
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('user'))
   const [invoicesList, setInvoicesList] = useState([])
+  const [invoicesFilter, setInvoicesFilter] = useState([])
   const history = useHistory()
 
   useEffect(() => {
     if (user) {
       axios
         .get('/organisations/' + user.id)
-        .then(response => setInvoicesList(response.data.factures))
+        .then(response => {
+          setInvoicesList(response.data.factures)
+          setInvoicesFilter(response.data.factures)
+        })
         .catch(err => console.log(err))
     } else {
       console.log('user not exist')
@@ -40,17 +44,32 @@ export default function Factures() {
     dispatch(clearInvoice())
   }
 
+  const handleChange = e => {
+    if (e.target.value !== '') {
+      setInvoicesFilter(invoicesList)
+      let result = invoicesFilter.filter(invoice => {
+        return invoice.num_facture
+          .toLowerCase()
+          .startsWith(e.target.value.toLowerCase())
+      })
+      setInvoicesFilter(result)
+    } else {
+      setInvoicesFilter(invoicesList)
+    }
+    setinput(e.target.value)
+  }
+
   return (
     <React.Fragment>
       {!createStatus && (
         <NavFacture
           search={input}
-          setSearch={setinput}
+          setSearch={handleChange}
           handleStatus={handleStatus}
         />
       )}
       {!createStatus && (
-        <ListeFactures search={input} invoicesList={invoicesList} />
+        <ListeFactures search={input} invoicesList={invoicesFilter} />
       )}
       {createStatus && <NewFacture handleStatus={handleStatus} />}
     </React.Fragment>

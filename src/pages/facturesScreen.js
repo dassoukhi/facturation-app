@@ -6,7 +6,7 @@ import Sidebar from '../components/Sidebar'
 
 const Cont = styled.div`
   display: block;
-  height: 100%;
+  height: 100vh;
   margin: 10px;
   background: #fff;
 `

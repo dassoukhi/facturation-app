@@ -56,11 +56,28 @@ export default function Clients() {
   const classes = useStyles()
   const [input, setinput] = useState('')
   const [clientList, setClientList] = useState([])
+  const [clientFilter, setClientFilter] = useState([])
   const user = JSON.parse(localStorage.getItem('user'))
+
+  const handleChange = e => {
+    if (e.target.value !== '') {
+      let result = clientFilter.filter(client => {
+        return client.nom.toLowerCase().startsWith(e.target.value.toLowerCase())
+      })
+      setClientFilter(result)
+    } else {
+      setClientFilter(clientList)
+    }
+
+    setinput(e.target.value)
+  }
   useEffect(() => {
     axios
       .get('/organisations/' + user.id)
-      .then(response => setClientList(response.data.clients))
+      .then(response => {
+        setClientList(response.data.clients)
+        setClientFilter(response.data.clients)
+      })
       .catch(err => console.log(err))
   }, [])
 
@@ -115,7 +132,7 @@ export default function Clients() {
           <InputBase
             placeholder='Recherche...'
             value={input}
-            onChange={e => setinput(e.target.value)}
+            onChange={handleChange}
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput
@@ -124,7 +141,7 @@ export default function Clients() {
           />
         </div>
       </div>
-      <ListeClients search={input} clientList={clientList} />
+      <ListeClients search={input} clientList={clientFilter} />
     </Paper>
   )
 }
