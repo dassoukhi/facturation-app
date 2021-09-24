@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import NavBar from '../components/navBar'
 import ParamGeneral from '../components/paramGeneral'
 import Sidebar from '../components/Sidebar'
+import DivScreen from './divScreen'
 
 const Cont = styled.div`
   display: block;
@@ -14,12 +15,12 @@ const ParamGeneralScreen = () => {
   return (
     <div className='appContainer'>
       <Sidebar />
-      <div className='factures'>
+      <DivScreen>
         <NavBar />
         <Cont>
           <ParamGeneral />
         </Cont>
-      </div>
+      </DivScreen>
     </div>
   )
 }

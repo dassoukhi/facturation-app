@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import NavBar from '../components/navBar'
 import Clients from '../components/clients'
 import Sidebar from '../components/Sidebar'
+import DivScreen from './divScreen'
 
 const Cont = styled.div`
   display: block;
@@ -14,12 +15,12 @@ const ClientsScreen = () => {
   return (
     <div className='appContainer'>
       <Sidebar />
-      <div className='clients'>
+      <DivScreen>
         <NavBar />
         <Cont>
           <Clients />
         </Cont>
-      </div>
+      </DivScreen>
     </div>
   )
 }

@@ -66,19 +66,7 @@ p { color: #7a7c7f;
   overflow: auto;
   background-color: #f0f3f6;
 }
-.factures,
-.clients,
-.products,
-.team,
-.reports {
-  margin-left: calc(1px + 15vw);
-  display: flex;
-  flex: 1 1 0%;
-  flex-direction: column;
-  @media (max-width: 990px) {
-    margin-lef: 0px;
-  }
-}
+
 
 .viewpdf{
   border: none;
