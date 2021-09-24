@@ -17,12 +17,12 @@ const SidebarNav = styled.div`
   background: #000131;
   width: calc(1px + 15vw);
   height: 100vh;
-  display: flex;
+  /* display: flex; */
   @media (max-width: 990px) {
     display: none;
   }
   justify-content: center;
-  position: relative;
+  position: fixed;
   top: 0;
   left: 0;
   transition: 350ms;
