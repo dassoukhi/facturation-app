@@ -101,7 +101,7 @@ const NavFacture = ({search, setSearch, handleStatus}) => {
         <InputBase
           placeholder='Recherche...'
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={setSearch}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput
