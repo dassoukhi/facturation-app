@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Button } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import ModalLogin from './modalLogin'
 import ModalRegister from './modalRegister'

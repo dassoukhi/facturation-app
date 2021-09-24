@@ -113,7 +113,10 @@ export default function StatusInvoice({ status, invoice_id }) {
         setOpen(false)
         setSelectedValue(value)
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)
+        setOpen(false)
+      })
   }
 
   return (
