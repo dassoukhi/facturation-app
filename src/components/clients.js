@@ -56,19 +56,9 @@ export default function Clients() {
   const classes = useStyles()
   const [input, setinput] = useState('')
   const [clientList, setClientList] = useState([])
-  const [clientFilter, setClientFilter] = useState([])
   const user = JSON.parse(localStorage.getItem('user'))
 
   const handleChange = e => {
-    if (e.target.value !== '') {
-      let result = clientFilter.filter(client => {
-        return client.nom.toLowerCase().startsWith(e.target.value.toLowerCase())
-      })
-      setClientFilter(result)
-    } else {
-      setClientFilter(clientList)
-    }
-
     setinput(e.target.value)
   }
   useEffect(() => {
@@ -76,11 +66,12 @@ export default function Clients() {
       .get('/organisations/' + user.id)
       .then(response => {
         setClientList(response.data.clients)
-        setClientFilter(response.data.clients)
       })
       .catch(err => console.log(err))
   }, [])
-
+  let clientFilter = clientList.filter(client => {
+    return client.nom.toLowerCase().startsWith(input.toLowerCase())
+  })
   return (
     <Paper className={classes.root}>
       <div

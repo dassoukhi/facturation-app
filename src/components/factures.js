@@ -16,7 +16,6 @@ export default function Factures() {
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('user'))
   const [invoicesList, setInvoicesList] = useState([])
-  const [invoicesFilter, setInvoicesFilter] = useState([])
   const history = useHistory()
 
   useEffect(() => {
@@ -25,7 +24,6 @@ export default function Factures() {
         .get('/organisations/' + user.id)
         .then(response => {
           setInvoicesList(response.data.factures)
-          setInvoicesFilter(response.data.factures)
         })
         .catch(err => console.log(err))
     } else {
@@ -45,20 +43,11 @@ export default function Factures() {
   }
 
   const handleChange = e => {
-    if (e.target.value !== '') {
-      setInvoicesFilter(invoicesList)
-      let result = invoicesFilter.filter(invoice => {
-        return invoice.num_facture
-          .toLowerCase()
-          .startsWith(e.target.value.toLowerCase())
-      })
-      setInvoicesFilter(result)
-    } else {
-      setInvoicesFilter(invoicesList)
-    }
     setinput(e.target.value)
   }
-
+  let invoiceFilter = invoicesList.filter(invoice => {
+    return invoice.num_facture.toLowerCase().startsWith(input.toLowerCase())
+  })
   return (
     <React.Fragment>
       {!createStatus && (
@@ -69,7 +58,7 @@ export default function Factures() {
         />
       )}
       {!createStatus && (
-        <ListeFactures search={input} invoicesList={invoicesFilter} />
+        <ListeFactures search={input} invoicesList={invoiceFilter} />
       )}
       {createStatus && <NewFacture handleStatus={handleStatus} />}
     </React.Fragment>
