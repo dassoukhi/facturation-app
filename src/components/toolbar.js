@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import { useHistory } from 'react-router'
+import LogoutIcon from '@material-ui/icons/ExitToApp'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,6 +34,9 @@ export default function ToolBar() {
     <div className={classes.root}>
       <AppBar position='static' color='default'>
         <Toolbar>
+          <Typography className={classes.title} variant='h6' noWrap>
+            {user && user.name}
+          </Typography>
           <IconButton
             edge='start'
             className={classes.menuButton}
@@ -43,24 +47,8 @@ export default function ToolBar() {
               history.push('/')
             }}
           >
-            <MenuIcon />
+            <LogoutIcon />
           </IconButton>
-          <Typography className={classes.title} variant='h6' noWrap>
-            {user && user.name}
-          </Typography>
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder='Search…'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div> */}
         </Toolbar>
       </AppBar>
     </div>
