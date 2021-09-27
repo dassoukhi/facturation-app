@@ -35,7 +35,7 @@ export default function ToolBar() {
       <AppBar position='static' color='default'>
         <Toolbar>
           <Typography className={classes.title} variant='h6' noWrap>
-            {user && user.name}
+            {user && String(user.name[0]).toUpperCase() + user.name.slice(1)}
           </Typography>
           <IconButton
             edge='start'
