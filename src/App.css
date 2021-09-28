@@ -74,3 +74,9 @@ p { color: #7a7c7f;
   height: calc(30px + 95vh);
   
 }
+
+.imagePreview{
+  justify-content: center;
+  align-items: center;
+ 
+}

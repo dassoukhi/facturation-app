@@ -127,6 +127,7 @@ export default function ListeFactures({ search, invoicesList }) {
                             textTransform: 'none',
                             marginRight: '-13px'
                           }}
+                          onClick={null}
                         >
                           {column.format || typeof value === 'number'
                             ? column.format(value)

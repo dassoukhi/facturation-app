@@ -25,7 +25,7 @@ export default function Factures() {
         .then(response => {
           setInvoicesList(response.data.factures)
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
     } else {
       console.log('user not exist')
       history.push('/')
@@ -58,7 +58,11 @@ export default function Factures() {
         />
       )}
       {!createStatus && (
-        <ListeFactures search={input} invoicesList={invoiceFilter} />
+        <ListeFactures
+          search={input}
+          invoicesList={invoiceFilter}
+          // handleStatus={handleStatus}
+        />
       )}
       {createStatus && <NewFacture handleStatus={handleStatus} />}
     </React.Fragment>
