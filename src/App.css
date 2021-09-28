@@ -80,3 +80,14 @@ p { color: #7a7c7f;
   align-items: center;
  
 }
+.imageResize{
+  height: 200px;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.DivImageResize{
+  justify-content: center;
+  background-color: red;
+}

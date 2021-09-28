@@ -74,7 +74,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EntrepriseParam() {
   const classes = useStyles()
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState(null)
   const user = JSON.parse(localStorage.getItem('user'))
   const [nom, setNom] = useState(user.name || '')
   const [email, setEmail] = useState(user.email || '')
@@ -85,17 +85,18 @@ export default function EntrepriseParam() {
   const [bankName, setBankName] = useState('')
   const [numRegister, setNumRegister] = useState('')
   const [tva, setTva] = useState('')
+  const [logoExist, setLogoExist] = useState(
+    localStorage.getItem('logo') ? true : false
+  )
 
-  console.log('file :', files)
   console.log('user :', user)
 
   const handleFile = e => {
-    setFiles(e[0])
     const file = e[0]
     if (file) {
       const reader = new FileReader()
       reader.onloadend = () => {
-        localStorage.setItem('logo', reader.result)
+        setFiles(reader.result)
       }
       reader.readAsDataURL(file)
     }
@@ -128,6 +129,10 @@ export default function EntrepriseParam() {
             siteWeb: res.data.site_internet
           })
         )
+        if (files) {
+          localStorage.setItem('logo', files)
+          setLogoExist(true)
+        }
       })
       .catch(err => console.error(err))
   }
@@ -276,11 +281,30 @@ export default function EntrepriseParam() {
                       variant='outlined'
                     />
                   </Grid>
+                  {logoExist && (
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <img
+                        className='imageResize'
+                        src={localStorage.getItem('logo')}
+                      />
+                    </Grid>
+                  )}
                   <DropzoneArea
                     onChange={handleFile}
                     acceptedFiles={['image/*']}
                     filesLimit={1}
-                    dropzoneText='Ajoutez le logo de votre entreprise'
+                    dropzoneText={
+                      localStorage.getItem('logo')
+                        ? 'Changez le logo de votre entreprise'
+                        : 'Ajoutez le logo de votre entreprise'
+                    }
                     getFileAddedMessage={e =>
                       'Le fichier ' + e + ' a été ajouté'
                     }
