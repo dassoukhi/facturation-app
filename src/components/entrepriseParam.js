@@ -287,9 +287,13 @@ export default function EntrepriseParam() {
                       xs={12}
                       style={{
                         display: 'flex',
-                        justifyContent: 'center'
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: '3px'
                       }}
                     >
+                      <p>Logo</p>
                       <img
                         className='imageResize'
                         src={localStorage.getItem('logo')}

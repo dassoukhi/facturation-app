@@ -85,6 +85,7 @@ p { color: #7a7c7f;
   width: 200px;
   justify-content: center;
   align-items: center;
+  border: 2px dashed rgb(212, 212, 212);
 }
 
 .DivImageResize{

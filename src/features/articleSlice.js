@@ -20,6 +20,11 @@ export const articleSlice = createSlice({
     resetAll: state => {
       state.value = initialStateValue
     },
+    removeFirst: state => {
+      const current = state.value
+      current.shift()
+      state.value = current
+    },
     changeDescript: (state, action) => {
       const current = [...state.value]
       let index = current.findIndex(e => e.id === action.payload.id)
@@ -71,7 +76,8 @@ export const {
   changeQuantite,
   changePrix,
   changeTotal,
-  changeTaxe
+  changeTaxe,
+  removeFirst
 } = articleSlice.actions
 
 export default articleSlice.reducer

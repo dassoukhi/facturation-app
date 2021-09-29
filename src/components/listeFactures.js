@@ -9,6 +9,12 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Button } from '@material-ui/core'
 import StatusInvoice from './statusInvoice'
+import axios from 'axios'
+import { addInvoice } from '../features/invoiceSlice'
+import { useDispatch } from 'react-redux'
+import { addArticle, removeFirst } from '../features/articleSlice'
+import { addClient } from '../features/clientSlice'
+import { useHistory } from 'react-router'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -73,6 +79,8 @@ const useStyles = makeStyles({
 
 export default function ListeFactures({ search, invoicesList }) {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const history = useHistory()
   console.log('input in liste: ' + search)
 
   const getSymbole = devise => {
@@ -86,7 +94,60 @@ export default function ListeFactures({ search, invoicesList }) {
     }
   }
 
-  console.log('invoices eff:', invoicesList)
+  const generateOldPDF = id => {
+    console.log(id)
+    axios
+      .get('/factures/' + id)
+      .then(res => {
+        //Add in factureSlice
+        dispatch(
+          addInvoice({
+            numFacture: res.data.num_facture,
+            dateDebut: new Date(res.data.date_debut).toLocaleDateString(),
+            dateEcheance: new Date(res.data.date_echeance).toLocaleDateString(),
+            devise: res.data.devise,
+            total: res.data.total,
+            HT: res.data.ht,
+            taxe: res.data.taxe
+          })
+        )
+        //Add in articleSlice
+        for (const article of res.data.articles) {
+          dispatch(
+            addArticle({
+              id: article.id,
+              description: article.description,
+              quantite: article.quantite,
+              prix: article.prix,
+              total: article.total,
+              taxe: article.taxe
+            })
+          )
+        }
+        //remove first item because is empty
+        dispatch(removeFirst())
+        //add in clientSlice
+        axios
+          .get('/clients/' + res.data.client_id)
+          .then(result => {
+            dispatch(
+              addClient({
+                name: result.data.nom,
+                adress: result.data.adresse,
+                email: result.data.email,
+                phone: result.data.telephone,
+                siteWeb: result.data.site_internet
+              })
+            )
+
+            //generate pdf
+            history.push('/factures/generateinvoice')
+          })
+          .catch(erreur => console.error(erreur))
+      })
+      .catch(err => console.error(err))
+  }
+
   return (
     <TableContainer className={classes.container}>
       <Table stickyHeader aria-label='sticky table'>
@@ -127,7 +188,7 @@ export default function ListeFactures({ search, invoicesList }) {
                             textTransform: 'none',
                             marginRight: '-13px'
                           }}
-                          onClick={null}
+                          onClick={() => generateOldPDF(row.id)}
                         >
                           {column.format || typeof value === 'number'
                             ? column.format(value)
