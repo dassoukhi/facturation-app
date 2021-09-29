@@ -57,13 +57,7 @@ export default function Factures() {
           handleStatus={handleStatus}
         />
       )}
-      {!createStatus && (
-        <ListeFactures
-          search={input}
-          invoicesList={invoiceFilter}
-          // handleStatus={handleStatus}
-        />
-      )}
+      {!createStatus && <ListeFactures invoicesList={invoiceFilter} />}
       {createStatus && <NewFacture handleStatus={handleStatus} />}
     </React.Fragment>
   )

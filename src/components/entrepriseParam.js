@@ -85,9 +85,7 @@ export default function EntrepriseParam() {
   const [bankName, setBankName] = useState('')
   const [numRegister, setNumRegister] = useState('')
   const [tva, setTva] = useState('')
-  const [logoExist, setLogoExist] = useState(
-    localStorage.getItem('logo') ? true : false
-  )
+  const [logo, setLogo] = useState(localStorage.getItem('logo'))
 
   console.log('user :', user)
 
@@ -131,7 +129,7 @@ export default function EntrepriseParam() {
         )
         if (files) {
           localStorage.setItem('logo', files)
-          setLogoExist(true)
+          setLogo(files)
         }
       })
       .catch(err => console.error(err))
@@ -281,7 +279,7 @@ export default function EntrepriseParam() {
                       variant='outlined'
                     />
                   </Grid>
-                  {logoExist && (
+                  {logo && (
                     <Grid
                       item
                       xs={12}

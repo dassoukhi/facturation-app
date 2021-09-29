@@ -7,7 +7,9 @@ import BillTo from './billTo'
 import InvoiceNo from './invoiceNo'
 import InvoiceItemsTable from './invoiceItemsTable'
 import InvoiceThankYouMsg from './invoiceThankYouMsg'
-import logo from '../../../src/logo192.png'
+import logo from '../../../src/images/dassolution.png'
+
+const entLogo = localStorage.getItem('logo')
 
 const styles = StyleSheet.create({
   page: {
@@ -34,7 +36,7 @@ const Invoice = ({ client, invoice, articles }) => {
   return (
     <Document>
       <Page size='A4' style={styles.page}>
-        <Image style={styles.logo} src={logo} />
+        <Image style={styles.logo} src={entLogo ? entLogo : logo} />
         <InvoiceTitle title='Facture' />
         <InvoiceNo invoice={invoice} />
         <BillTo client={client} />

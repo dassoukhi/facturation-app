@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { Button } from '@material-ui/core'
+import { Button, CircularProgress } from '@material-ui/core'
 import StatusInvoice from './statusInvoice'
 import axios from 'axios'
 import { addInvoice } from '../features/invoiceSlice'
@@ -73,15 +73,39 @@ const columns = [
 
 const useStyles = makeStyles({
   container: {
-    maxHeight: 'calc(40px + 60vh)'
+    maxHeight: 'calc(40px + 60vh)',
+    position: 'relative'
+  },
+  load: {
+    backgroundColor: 'rgba(0, 0, 0, .5)',
+    position: 'fixed',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    width: 'calc(1px + 85vw)',
+    bottom: '0px',
+    right: '0px',
+    zIndex: '999',
+    marginLeft: 'calc(1px + 15vw)',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  message: {
+    // marginBottom: 'calc(0px + 30vh)',
+    color: 'white',
+    textShadow: 'none',
+    fontFamily: 'none'
+  },
+  circular: {
+    color: 'white'
   }
 })
 
-export default function ListeFactures({ search, invoicesList }) {
+export default function ListeFactures({ invoicesList }) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const history = useHistory()
-  console.log('input in liste: ' + search)
+  const [isLoading, setIsLoading] = useState(false)
 
   const getSymbole = devise => {
     if (devise === 'USD') {
@@ -96,6 +120,7 @@ export default function ListeFactures({ search, invoicesList }) {
 
   const generateOldPDF = id => {
     console.log(id)
+    setIsLoading(true)
     axios
       .get('/factures/' + id)
       .then(res => {
@@ -139,13 +164,19 @@ export default function ListeFactures({ search, invoicesList }) {
                 siteWeb: result.data.site_internet
               })
             )
-
+            setIsLoading(false)
             //generate pdf
             history.push('/factures/generateinvoice')
           })
-          .catch(erreur => console.error(erreur))
+          .catch(erreur => {
+            setIsLoading(false)
+            console.error(erreur)
+          })
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        setIsLoading(false)
+        console.error(err)
+      })
   }
 
   return (
@@ -210,6 +241,14 @@ export default function ListeFactures({ search, invoicesList }) {
           })}
         </TableBody>
       </Table>
+      {isLoading && (
+        <div className={classes.load}>
+          <p className={classes.message}>
+            Génération de la facture en cours ...
+          </p>
+          <CircularProgress className={classes.circular} />
+        </div>
+      )}
     </TableContainer>
   )
 }

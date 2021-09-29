@@ -17,7 +17,6 @@ const SidebarNav = styled.div`
   background: #000131;
   width: calc(1px + 15vw);
   height: 100vh;
-  /* display: flex; */
   @media (max-width: 990px) {
     display: none;
   }

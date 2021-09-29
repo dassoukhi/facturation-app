@@ -66,11 +66,6 @@ const DisplayInvoice = () => {
           className='app'
           showToolbar={false}
           className='viewpdf'
-          // style={{
-          //   border: 'none',
-          //   width: 'calc(40px + 60.5vw)',
-          //   height: 'calc(20px + 95vh)'
-          // }}
         >
           <Invoice
             client={currentClient}
@@ -97,18 +92,14 @@ const DisplayInvoice = () => {
           }
           fileName={String(currentInvoice.numFacture).concat('.pdf')}
         >
-          {({ blob, url, loading, error }) =>
-            loading ? (
-              'Chargement...'
-            ) : (
-              <IconButton
-                href={instance.url}
-                download={String(currentInvoice.numFacture).concat('.pdf')}
-              >
-                <GetAppIcon fontSize='large' />
-              </IconButton>
-            )
-          }
+          {({ blob, url, loading, error }) => (
+            <IconButton
+              href={instance.url}
+              download={String(currentInvoice.numFacture).concat('.pdf')}
+            >
+              <GetAppIcon fontSize='large' />
+            </IconButton>
+          )}
         </PDFDownloadLink>
       </div>
     </div>
