@@ -154,7 +154,7 @@ export default function ListeFactures({ invoicesList }) {
         dispatch(removeFirst())
         //add in clientSlice
         axios
-          .get('/clients/' + res.data.client_id)
+          .get(API + '/clients/' + res.data.client_id)
           .then(result => {
             dispatch(
               addClient({
