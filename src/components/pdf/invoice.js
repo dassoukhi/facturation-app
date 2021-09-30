@@ -10,6 +10,7 @@ import InvoiceThankYouMsg from './invoiceThankYouMsg'
 import logo from '../../../src/images/dassolution.png'
 
 const entLogo = localStorage.getItem('logo')
+// console.log('entLogo:', entLogo)
 
 const styles = StyleSheet.create({
   page: {
