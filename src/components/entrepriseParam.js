@@ -13,6 +13,8 @@ import { AppBar, Grid, TextField } from '@material-ui/core'
 import styled from 'styled-components'
 import axios from 'axios'
 import API from '../services/api'
+import ToastMessage from './toastMessage'
+import notify from './notify'
 
 const Nav = styled.div`
   display: flex;
@@ -87,6 +89,7 @@ export default function EntrepriseParam() {
   const [numRegister, setNumRegister] = useState('')
   const [tva, setTva] = useState('')
   const [logo, setLogo] = useState(localStorage.getItem('logo'))
+  const [showLogo, setShowLogo] = useState(true)
 
   console.log('user :', user)
 
@@ -132,6 +135,8 @@ export default function EntrepriseParam() {
           localStorage.setItem('logo', files)
           setLogo(files)
         }
+        setShowLogo(false)
+        notify()
       })
       .catch(err => console.error(err))
   }
@@ -303,6 +308,7 @@ export default function EntrepriseParam() {
                     onChange={handleFile}
                     acceptedFiles={['image/*']}
                     filesLimit={1}
+                    showPreviewsInDropzone={showLogo}
                     dropzoneText={
                       localStorage.getItem('logo')
                         ? 'Changez le logo de votre entreprise'
@@ -327,6 +333,7 @@ export default function EntrepriseParam() {
                 >
                   Valider
                 </Button>
+                <ToastMessage />
               </div>
             </React.Fragment>
           </form>
