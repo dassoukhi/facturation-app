@@ -9,18 +9,27 @@ import ListItemText from '@material-ui/core/ListItemText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 import CancelIcon from '@material-ui/icons/Cancel'
+import Block from '@material-ui/icons/Block'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import { makeStyles } from '@material-ui/core'
 import axios from 'axios'
 import API from '../services/api'
 
-const etats = ['Confirmée', 'Payée', 'Annulée']
+const etats = ['Confirmée', 'Payée', 'Annulée', 'Supprimée']
 
 const useStyles = makeStyles(theme => ({
-  deleteButton: {
+  paidButton: {
     color: theme.palette.success.main,
     borderColor: theme.palette.success.main
+  },
+  cancelButton: {
+    color: theme.palette.warning.main,
+    borderColor: theme.palette.warning.main
+  },
+  confirmButton: {
+    color: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main
   }
 }))
 
@@ -56,7 +65,8 @@ function SimpleDialog(props) {
               {etat === 'Payée' && (
                 <AssignmentTurnedInIcon style={{ color: '#4caf50' }} />
               )}
-              {etat === 'Annulée' && <CancelIcon color={'secondary'} />}
+              {etat === 'Annulée' && <Block style={{ color: '#eed202' }} />}
+              {etat === 'Supprimée' && <CancelIcon color={'secondary'} />}
             </ListItemAvatar>
             <ListItemText primary={etat} />
           </ListItem>
@@ -80,12 +90,12 @@ export default function StatusInvoice({ status, invoice_id }) {
 
   const getColor = c => {
     if (String(c).toLowerCase() === 'confirmée') {
-      return 'primary'
+      return classes.confirmButton
     }
     if (String(c).toLowerCase() === 'payée') {
-      return 'error'
+      return classes.paidButton
     } else {
-      return 'secondary'
+      return classes.cancelButton
     }
   }
 
@@ -104,28 +114,34 @@ export default function StatusInvoice({ status, invoice_id }) {
     if (value === 'Annulée') {
       senderValue = 'cancel'
     }
+    if (value === 'Supprimée') {
+      senderValue = 'delete'
+    }
 
     console.log('Value :', senderValue, 'val:', value)
 
-    axios
-      .put(API + '/factures/' + invoice_id, { etat: senderValue })
-      .then(res => {
-        console.log(res.data)
-        setOpen(false)
-        setSelectedValue(value)
-      })
-      .catch(err => {
-        console.error(err)
-        setOpen(false)
-      })
+    if (senderValue !== 'delete') {
+      axios
+        .put(API + '/factures/' + invoice_id, { etat: senderValue })
+        .then(res => {
+          console.log(res.data)
+          setOpen(false)
+          setSelectedValue(value)
+        })
+        .catch(err => {
+          console.error(err)
+          setOpen(false)
+        })
+    } else {
+      setOpen(false)
+    }
   }
 
   return (
     <div>
       <Button
         variant='outlined'
-        className={getColor(selectedValue) === 'error' && classes.deleteButton}
-        color={getColor(selectedValue)}
+        className={getColor(selectedValue)}
         style={{
           textTransform: 'none',
           marginRight: '-13px'
