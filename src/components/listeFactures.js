@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import { addArticle, removeFirst } from '../features/articleSlice'
 import { addClient } from '../features/clientSlice'
 import { useHistory } from 'react-router'
+import API from '../services/api'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -122,7 +123,7 @@ export default function ListeFactures({ invoicesList }) {
     console.log(id)
     setIsLoading(true)
     axios
-      .get('/factures/' + id)
+      .get(API + '/factures/' + id)
       .then(res => {
         //Add in factureSlice
         dispatch(

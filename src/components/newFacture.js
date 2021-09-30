@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import ModalClient from './modalClient'
 import { addInvoice } from '../features/invoiceSlice'
 import axios from 'axios'
+import API from '../services/api'
 
 function getDate() {
   var today = new Date()
@@ -131,7 +132,7 @@ export default function NewFacture({ handleStatus }) {
     if (currentClient.name !== '' && user) {
       //create client
       axios
-        .post('/clients', {
+        .post(API + '/clients', {
           nom: currentClient.name,
           adresse: currentClient.adress,
           email: currentClient.email,
@@ -142,7 +143,7 @@ export default function NewFacture({ handleStatus }) {
         .then(res => {
           console.log(res.data)
           axios
-            .post('/factures', {
+            .post(API + '/factures', {
               num_facture: numFact,
               devise: devise,
               date_echeance: selectedDateEch,
@@ -160,7 +161,7 @@ export default function NewFacture({ handleStatus }) {
               console.log(result.data)
               for (const article of currentArticles) {
                 axios
-                  .post('/articles', {
+                  .post(API + '/articles', {
                     description: article.description,
                     quantite: article.quantite,
                     prix: article.prix,

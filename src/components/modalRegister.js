@@ -10,6 +10,7 @@ import 'react-phone-input-2/lib/style.css'
 import axios from 'axios'
 import MessageError from './messageError'
 import { useHistory } from 'react-router'
+import API from '../services/api'
 const useStyles = makeStyles(theme => ({
   modal: {
     display: 'flex',
@@ -46,7 +47,7 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
     e.preventDefault()
     if (password === passwordSame) {
       axios
-        .post('/organisations/register', {
+        .post(API + '/organisations/register', {
           nom: name,
           email: email,
           password: password

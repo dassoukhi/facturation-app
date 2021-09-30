@@ -12,6 +12,7 @@ import { DropzoneArea } from 'material-ui-dropzone'
 import { AppBar, Grid, TextField } from '@material-ui/core'
 import styled from 'styled-components'
 import axios from 'axios'
+import API from '../services/api'
 
 const Nav = styled.div`
   display: flex;
@@ -103,7 +104,7 @@ export default function EntrepriseParam() {
   const handleSubmit = e => {
     e.preventDefault()
     axios
-      .put('/organisations/' + user.id, {
+      .put(API + '/organisations/' + user.id, {
         nom: nom,
         email: email,
         adresse: address,
@@ -137,7 +138,7 @@ export default function EntrepriseParam() {
 
   useEffect(() => {
     axios
-      .get('/organisations/' + user.id)
+      .get(API + '/organisations/' + user.id)
       .then(res => {
         console.log(res.data)
         setBankName(res.data.nom_banque)

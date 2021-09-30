@@ -7,6 +7,7 @@ import { Button, InputBase } from '@material-ui/core'
 import ListeClients from './listeClients'
 import { useState } from 'react'
 import axios from 'axios'
+import API from '../services/api'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,7 +64,7 @@ export default function Clients() {
   }
   useEffect(() => {
     axios
-      .get('/organisations/' + user.id)
+      .get(API + '/organisations/' + user.id)
       .then(response => {
         setClientList(response.data.clients)
       })

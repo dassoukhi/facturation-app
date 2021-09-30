@@ -9,6 +9,7 @@ import NavFacture from './navFacture'
 import NewFacture from './newFacture'
 import axios from 'axios'
 import { useHistory } from 'react-router'
+import API from '../services/api'
 
 export default function Factures() {
   const [input, setinput] = useState('')
@@ -21,7 +22,7 @@ export default function Factures() {
   useEffect(() => {
     if (user) {
       axios
-        .get('/organisations/' + user.id)
+        .get(API + '/organisations/' + user.id)
         .then(response => {
           setInvoicesList(response.data.factures)
         })

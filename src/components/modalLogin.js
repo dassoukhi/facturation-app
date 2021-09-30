@@ -9,6 +9,7 @@ import axios from 'axios'
 import MessageError from './messageError'
 import { useHistory } from 'react-router'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import API from '../services/api'
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -43,7 +44,7 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
     setLoading(true)
     e.preventDefault()
     axios
-      .post('/organisations/login', { email: email, password: password })
+      .post(API + '/organisations/login', { email: email, password: password })
       .then(response => {
         console.log(JSON.stringify(response.data))
         localStorage.setItem('user', JSON.stringify(response.data))
