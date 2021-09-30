@@ -9,9 +9,6 @@ import InvoiceItemsTable from './invoiceItemsTable'
 import InvoiceThankYouMsg from './invoiceThankYouMsg'
 import logo from '../../../src/images/dassolution.png'
 
-const entLogo = localStorage.getItem('logo')
-// console.log('entLogo:', entLogo)
-
 const styles = StyleSheet.create({
   page: {
     fontFamily: 'Helvetica',
@@ -31,6 +28,7 @@ const styles = StyleSheet.create({
 })
 
 const Invoice = ({ client, invoice, articles }) => {
+  const entLogo = localStorage.getItem('logo')
   console.log('pdfClient :', client)
   console.log('pdfFacture :', invoice)
   console.log('pdfArtcles :', articles)

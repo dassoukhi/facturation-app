@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { Button, CircularProgress } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import StatusInvoice from './statusInvoice'
 import axios from 'axios'
 import { addInvoice } from '../features/invoiceSlice'
@@ -16,6 +16,7 @@ import { addArticle, removeFirst } from '../features/articleSlice'
 import { addClient } from '../features/clientSlice'
 import { useHistory } from 'react-router'
 import API from '../services/api'
+import WaitBeforePdf from './waitBeforePdf'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -76,29 +77,6 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 'calc(40px + 60vh)',
     position: 'relative'
-  },
-  load: {
-    backgroundColor: 'rgba(0, 0, 0, .5)',
-    position: 'fixed',
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    width: 'calc(1px + 85vw)',
-    bottom: '0px',
-    right: '0px',
-    zIndex: '999',
-    marginLeft: 'calc(1px + 15vw)',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  message: {
-    // marginBottom: 'calc(0px + 30vh)',
-    color: 'white',
-    textShadow: 'none',
-    fontFamily: 'none'
-  },
-  circular: {
-    color: 'white'
   }
 })
 
@@ -197,9 +175,9 @@ export default function ListeFactures({ invoicesList }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {invoicesList.map((row, index) => {
+          {invoicesList.map(row => {
             return (
-              <TableRow hover role='checkbox' tabIndex={-1} key={index}>
+              <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
                 {columns.map(column => {
                   const value =
                     column.id === 'total'
@@ -242,14 +220,7 @@ export default function ListeFactures({ invoicesList }) {
           })}
         </TableBody>
       </Table>
-      {isLoading && (
-        <div className={classes.load}>
-          <p className={classes.message}>
-            Génération de la facture en cours ...
-          </p>
-          <CircularProgress className={classes.circular} />
-        </div>
-      )}
+      {isLoading && <WaitBeforePdf />}
     </TableContainer>
   )
 }

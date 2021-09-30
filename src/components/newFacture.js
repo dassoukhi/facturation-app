@@ -24,6 +24,7 @@ import ModalClient from './modalClient'
 import { addInvoice } from '../features/invoiceSlice'
 import axios from 'axios'
 import API from '../services/api'
+import WaitBeforePdf from './waitBeforePdf'
 
 function getDate() {
   var today = new Date()
@@ -61,6 +62,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative'
   },
   layout: {
+    position: 'relative',
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
@@ -93,7 +95,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function NewFacture({ handleStatus }) {
+export default function NewFacture({ handleStatus, length }) {
   const classes = useStyles()
   const [selectedDateEch, setSelectedDateEch] = useState(new Date())
   const [selectedDateFact, setSelectedDateFact] = useState(new Date())
@@ -105,7 +107,7 @@ export default function NewFacture({ handleStatus }) {
   }
   const [client, setClient] = useState('')
   const [open, setOpen] = useState(false)
-  const [numFact, setNumFact] = useState('FACT-' + getDate())
+  const [numFact, setNumFact] = useState('FACT' + length + '-' + getDate())
   const [devise, setDevise] = useState('CFA')
   const currentArticles = useSelector(state => state.article.value)
   const currentClient = useSelector(state => state.client.value)
@@ -116,8 +118,10 @@ export default function NewFacture({ handleStatus }) {
   var taxPercent = '0'
   var total = '0.0'
   const history = useHistory()
+  const [isLoading, setIsLoading] = useState(false)
 
   const generateInvoice = () => {
+    setIsLoading(!isLoading)
     dispatch(
       addInvoice({
         numFacture: numFact,
@@ -171,6 +175,8 @@ export default function NewFacture({ handleStatus }) {
                   })
                   .then(resultat => {
                     console.log('article', resultat.data)
+                    setIsLoading(false)
+                    history.push('/factures/generateinvoice')
                   })
                   .catch(err => console.error(err))
               }
@@ -179,7 +185,7 @@ export default function NewFacture({ handleStatus }) {
         })
         .catch(err => console.log(err))
     }
-    history.push('/factures/generateinvoice')
+    setIsLoading(false)
   }
 
   function valideInvoice() {
@@ -220,7 +226,6 @@ export default function NewFacture({ handleStatus }) {
   const changeClient = () => {
     setOpen(true)
   }
-  console.log('client :' + client)
 
   return (
     <Fragment>
@@ -396,6 +401,7 @@ export default function NewFacture({ handleStatus }) {
             />
           </Paper>
         </MuiPickersUtilsProvider>
+        {isLoading && <WaitBeforePdf />}
       </main>
     </Fragment>
   )

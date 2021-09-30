@@ -9,6 +9,7 @@ import themeReducer from './features/themeSlice'
 import invoiceSlice from './features/invoiceSlice'
 import clientSlice from './features/clientSlice'
 import articleSlice from './features/articleSlice'
+import listInvoicesSlice from './features/listInvoicesSlice'
 
 const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ const store = configureStore({
     theme: themeReducer,
     invoice: invoiceSlice,
     article: articleSlice,
-    client: clientSlice
+    client: clientSlice,
+    listInvoices: listInvoicesSlice
   }
 })
 

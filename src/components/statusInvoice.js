@@ -15,6 +15,8 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import { makeStyles } from '@material-ui/core'
 import axios from 'axios'
 import API from '../services/api'
+import { useDispatch } from 'react-redux'
+import { deleteItem } from '../features/listInvoicesSlice'
 
 const etats = ['Confirmée', 'Payée', 'Annulée', 'Supprimée']
 
@@ -45,7 +47,16 @@ function SimpleDialog(props) {
   }
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog
+      onClose={handleClose}
+      open={open}
+      style={{
+        marginLeft: 'calc(1px + 15vw)',
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: 'calc(4px + 9vw)'
+      }}
+    >
       <DialogTitle
         style={{
           backgroundColor: '#fff',
@@ -85,6 +96,7 @@ SimpleDialog.propTypes = {
 export default function StatusInvoice({ status, invoice_id }) {
   const [open, setOpen] = React.useState(false)
   const [selectedValue, setSelectedValue] = React.useState(status)
+  const dispatch = useDispatch()
   const classes = useStyles()
   console.log('invoice_id', invoice_id)
 
@@ -133,6 +145,13 @@ export default function StatusInvoice({ status, invoice_id }) {
           setOpen(false)
         })
     } else {
+      axios
+        .delete(API + '/factures/' + invoice_id)
+        .then(res => {
+          console.log(res.data)
+          dispatch(deleteItem(invoice_id))
+        })
+        .catch(err => console.error(err))
       setOpen(false)
     }
   }

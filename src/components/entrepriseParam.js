@@ -263,7 +263,7 @@ export default function EntrepriseParam() {
                     <PhoneInput
                       country={'default'}
                       value={phone}
-                      onChange={e => setPhone(e.target.value)}
+                      onChange={e => setPhone(e)}
                       placeholder='Numéro de téléphone'
                       containerStyle={{ width: '20px' }}
                       inputStyle={{

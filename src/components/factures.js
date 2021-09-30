@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { clearClient } from '../features/clientSlice'
 import { resetAll } from '../features/articleSlice'
 import { clearInvoice } from '../features/invoiceSlice'
@@ -10,13 +10,14 @@ import NewFacture from './newFacture'
 import axios from 'axios'
 import { useHistory } from 'react-router'
 import API from '../services/api'
+import { getListInvoices } from '../features/listInvoicesSlice'
 
 export default function Factures() {
+  const invoicesList = useSelector(state => state.listInvoices.value)
   const [input, setinput] = useState('')
   const [createStatus, setCreateStatus] = useState(false)
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('user'))
-  const [invoicesList, setInvoicesList] = useState([])
   const history = useHistory()
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function Factures() {
       axios
         .get(API + '/organisations/' + user.id)
         .then(response => {
-          setInvoicesList(response.data.factures)
+          dispatch(getListInvoices(response.data.factures))
         })
         .catch(err => console.error(err))
     } else {
@@ -46,6 +47,7 @@ export default function Factures() {
   const handleChange = e => {
     setinput(e.target.value)
   }
+
   let invoiceFilter = invoicesList.filter(invoice => {
     return invoice.num_facture.toLowerCase().startsWith(input.toLowerCase())
   })
@@ -59,7 +61,9 @@ export default function Factures() {
         />
       )}
       {!createStatus && <ListeFactures invoicesList={invoiceFilter} />}
-      {createStatus && <NewFacture handleStatus={handleStatus} />}
+      {createStatus && (
+        <NewFacture handleStatus={handleStatus} length={invoicesList.length} />
+      )}
     </React.Fragment>
   )
 }
