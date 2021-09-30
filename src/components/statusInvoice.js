@@ -13,6 +13,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import { makeStyles } from '@material-ui/core'
 import axios from 'axios'
+import API from '../services/api'
 
 const etats = ['Confirmée', 'Payée', 'Annulée']
 
@@ -107,7 +108,7 @@ export default function StatusInvoice({ status, invoice_id }) {
     console.log('Value :', senderValue, 'val:', value)
 
     axios
-      .put('/factures/' + invoice_id, { etat: senderValue })
+      .put(API + '/factures/' + invoice_id, { etat: senderValue })
       .then(res => {
         console.log(res.data)
         setOpen(false)
