@@ -11,6 +11,9 @@ import { useHistory } from 'react-router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import API from '../services/api'
 
+const TextForgotPassword =
+  'Entrez votre adresse e-mail ci-dessous et nous vous enverrons un lien pour réinitialiser votre mot de passe.'
+
 const useStyles = makeStyles(theme => ({
   modal: {
     display: 'flex',
@@ -24,8 +27,33 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '12px',
     outline: 'none',
     justifyItems: 'center',
-    alignItems: 'center',
-    width: 'calc(40px + 60vw)'
+    alignItems: 'center'
+  },
+  textShow: {
+    fontSize: '25px',
+    fontFamily: 'initial',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '20px'
+    }
+  },
+  inputStyle: {
+    width: '300px',
+    [theme.breakpoints.down('xs')]: {
+      width: '240px'
+    }
+  },
+  textForgotDiv: {
+    display: 'flex',
+    width: 300,
+    paddingBottom: 20,
+    textAlign: 'center',
+    [theme.breakpoints.down('xs')]: {
+      width: '260px'
+    }
+  },
+  textForgotSapn: {
+    fontSize: 12,
+    color: '#7a7c7f'
   }
 }))
 
@@ -37,6 +65,7 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
   const [messageError, setMessageError] = useState('')
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  const [forgot, setForgot] = useState(false)
   const user = localStorage.getItem('user')
   console.log('user Login : ', user)
 
@@ -61,6 +90,10 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
       })
   }
 
+  const isForgotPassword = () => {
+    console.log('forgot')
+    setForgot(!forgot)
+  }
   return (
     <div>
       <Modal
@@ -78,13 +111,23 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
         <Fade in={openLogin}>
           <div className={classes.paper}>
             <form onSubmit={submitConnexion}>
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  marginLeft: 20,
+                  marginBottom: 10,
+                  padding: 0,
+                  width: '100%'
+                }}
+              >
                 <button
                   style={{
                     backgroundColor: 'transparent',
                     border: 'none',
                     fontSize: '20px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    color: 'black'
                   }}
                   onClick={e => {
                     e.preventDefault()
@@ -100,17 +143,19 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   justifyContent: 'center',
                   alignItems: 'center',
                   display: 'flex',
-                  height: 'calc(10px + 5.5vw)'
+                  height: '35px',
+                  marginBottom: 15
                 }}
               >
-                <span
-                  style={{
-                    fontSize: 'calc(5px + 2.5vw)',
-                    fontFamily: 'initial'
-                  }}
-                >
-                  Connectez à votre compte
-                </span>
+                {forgot ? (
+                  <span className={classes.textShow}>
+                    Réinitialiser le mot de passe
+                  </span>
+                ) : (
+                  <span className={classes.textShow}>
+                    Connectez à votre compte
+                  </span>
+                )}
               </div>
               {isError && <MessageError message={messageError} />}
               {loading && (
@@ -118,15 +163,22 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   <CircularProgress />
                 </div>
               )}
+              {forgot && (
+                <div className={classes.textForgotDiv}>
+                  <span className={classes.textForgotSapn}>
+                    {TextForgotPassword}
+                  </span>
+                </div>
+              )}
               <div
                 style={{
-                  marginTop: 'calc(5px + 0.5vw)',
                   display: 'flex',
                   justifyContent: 'center',
                   justifyItems: 'center'
                 }}
               >
                 <TextField
+                  className={classes.inputStyle}
                   required
                   name='emailModal'
                   label='Email'
@@ -135,35 +187,36 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   onChange={e => setEmail(e.target.value)}
                   variant='outlined'
                   size='small'
-                  style={{ width: 'calc(65px + 40vw)' }}
                 />
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  marginTop: 'calc(5px + 1.5vw)',
-                  justifyContent: 'center',
-                  justifyItems: 'center'
-                }}
-              >
-                <TextField
-                  required
-                  name='passwordModal'
-                  label='Mot de passe'
-                  type='password'
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  variant='outlined'
-                  size='small'
-                  style={{ width: 'calc(65px + 40vw)' }}
-                />
-              </div>
+              {!forgot && (
+                <div
+                  style={{
+                    display: 'flex',
+                    marginTop: '15px',
+                    justifyContent: 'center',
+                    justifyItems: 'center'
+                  }}
+                >
+                  <TextField
+                    required
+                    className={classes.inputStyle}
+                    name='passwordModal'
+                    label='Mot de passe'
+                    type='password'
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    variant='outlined'
+                    size='small'
+                  />
+                </div>
+              )}
 
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
-                  marginTop: 'calc(10px + 2vw)'
+                  marginTop: '20px'
                 }}
               >
                 <Button
@@ -176,8 +229,23 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                     fontSize: '15px'
                   }}
                 >
-                  Connexion
+                  {forgot ? 'Valider' : 'Connexion'}
                 </Button>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '20px'
+                }}
+              >
+                <a
+                  href='#'
+                  onClick={isForgotPassword}
+                  style={{ textDecoration: 'none' }}
+                >
+                  Mot de passe oublié?
+                </a>
               </div>
             </form>
           </div>

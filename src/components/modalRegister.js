@@ -24,8 +24,20 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '12px',
     outline: 'none',
     justifyItems: 'center',
-    alignItems: 'center',
-    width: 'calc(60px + 60vw)'
+    alignItems: 'center'
+  },
+  textShow: {
+    fontSize: '25px',
+    fontFamily: 'initial',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '20px'
+    }
+  },
+  inputStyle: {
+    width: '300px',
+    [theme.breakpoints.down('xs')]: {
+      width: '240px'
+    }
   }
 }))
 
@@ -93,13 +105,23 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
         <Fade in={openRegister}>
           <div className={classes.paper}>
             <form onSubmit={submitClient}>
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  marginLeft: 20,
+                  marginBottom: 10,
+                  padding: 0,
+                  width: '100%'
+                }}
+              >
                 <button
                   style={{
                     backgroundColor: 'transparent',
                     border: 'none',
                     fontSize: '20px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    color: 'black'
                   }}
                   onClick={e => {
                     e.preventDefault()
@@ -114,17 +136,10 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                   justifyContent: 'center',
                   alignItems: 'center',
                   display: 'flex',
-                  height: 'calc(10px + 5.5vw)'
+                  height: '60px'
                 }}
               >
-                <span
-                  style={{
-                    fontSize: 'calc(5px + 2.5vw)',
-                    fontFamily: 'initial'
-                  }}
-                >
-                  Créez votre compte
-                </span>
+                <span className={classes.textShow}>Créez votre compte</span>
               </div>
               {isError && <MessageError message={messageError} />}
               {loading && (
@@ -134,13 +149,13 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
               )}
               <div
                 style={{
-                  marginTop: 'calc(5px + 0.5vw)',
                   display: 'flex',
                   justifyContent: 'center',
                   justifyItems: 'center'
                 }}
               >
                 <TextField
+                  className={classes.inputStyle}
                   required
                   name='nameModal'
                   label='Nom'
@@ -150,7 +165,6 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                   size='small'
                   variant='outlined'
                   autoComplete='given-name'
-                  style={{ width: 'calc(65px + 40vw)' }}
                 />
               </div>
               <div
@@ -162,6 +176,7 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                 }}
               >
                 <TextField
+                  className={classes.inputStyle}
                   required
                   name='emailModal'
                   label='Email'
@@ -170,7 +185,6 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                   onChange={e => setEmail(e.target.value)}
                   variant='outlined'
                   size='small'
-                  style={{ width: 'calc(65px + 40vw)' }}
                 />
               </div>
               <div
@@ -182,6 +196,7 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                 }}
               >
                 <TextField
+                  className={classes.inputStyle}
                   required
                   name='password'
                   label='Mot de passe'
@@ -190,7 +205,6 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                   onChange={e => setPassword(e.target.value)}
                   variant='outlined'
                   size='small'
-                  style={{ width: 'calc(65px + 40vw)' }}
                 />
               </div>
               <div
@@ -202,6 +216,7 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                 }}
               >
                 <TextField
+                  className={classes.inputStyle}
                   required
                   name='password'
                   label='Confirmer mot de passe'
@@ -210,7 +225,6 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
                   onChange={e => setPasswordSame(e.target.value)}
                   variant='outlined'
                   size='small'
-                  style={{ width: 'calc(65px + 40vw)' }}
                 />
               </div>
 
