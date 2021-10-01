@@ -10,6 +10,8 @@ import MessageError from './messageError'
 import { useHistory } from 'react-router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import API from '../services/api'
+import ToastMessage from './toastMessage'
+import notify from './notify'
 
 const TextForgotPassword =
   'Entrez votre adresse e-mail ci-dessous et nous vous enverrons un lien pour réinitialiser votre mot de passe.'
@@ -70,24 +72,37 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
   console.log('user Login : ', user)
 
   const submitConnexion = e => {
-    setLoading(true)
     e.preventDefault()
-    axios
-      .post(API + '/organisations/login', { email: email, password: password })
-      .then(response => {
-        console.log(JSON.stringify(response.data))
-        localStorage.setItem('user', JSON.stringify(response.data))
-        setLoading(false)
-        history.push('/factures')
-      })
-      .catch(err => {
-        if (err.response) {
-          setIsError(true)
-          setMessageError(err.response.data.error)
+    if (forgot) {
+      axios
+        .post(API + '/organisations/forgot', { email: email })
+        .then(res => {
+          notify(1)
+          console.log('sended :', res.data.ok)
+        })
+        .catch(err => console.error(err))
+    } else {
+      setLoading(true)
+      axios
+        .post(API + '/organisations/login', {
+          email: email,
+          password: password
+        })
+        .then(response => {
+          console.log(JSON.stringify(response.data))
+          localStorage.setItem('user', JSON.stringify(response.data))
           setLoading(false)
-          console.log(err.response.data.error)
-        }
-      })
+          history.push('/factures')
+        })
+        .catch(err => {
+          if (err.response) {
+            setIsError(true)
+            setMessageError(err.response.data.error)
+            setLoading(false)
+            console.log(err.response.data.error)
+          }
+        })
+    }
   }
 
   const isForgotPassword = () => {
@@ -159,7 +174,13 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
               </div>
               {isError && <MessageError message={messageError} />}
               {loading && (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    paddingBottom: '20px'
+                  }}
+                >
                   <CircularProgress />
                 </div>
               )}
@@ -229,7 +250,7 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                     fontSize: '15px'
                   }}
                 >
-                  {forgot ? 'Valider' : 'Connexion'}
+                  {forgot ? 'Envoyer' : 'Connexion'}
                 </Button>
               </div>
               <div
@@ -244,8 +265,9 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   onClick={isForgotPassword}
                   style={{ textDecoration: 'none' }}
                 >
-                  Mot de passe oublié?
+                  {!forgot ? 'Mot de passe oublié?' : 'Se connecter?'}
                 </a>
+                <ToastMessage />
               </div>
             </form>
           </div>

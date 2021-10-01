@@ -136,7 +136,7 @@ export default function EntrepriseParam() {
           setLogo(files)
         }
         setShowLogo(false)
-        notify()
+        notify(0)
       })
       .catch(err => console.error(err))
   }

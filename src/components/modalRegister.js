@@ -143,7 +143,13 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
               </div>
               {isError && <MessageError message={messageError} />}
               {loading && (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    paddingBottom: '20px'
+                  }}
+                >
                   <CircularProgress />
                 </div>
               )}
