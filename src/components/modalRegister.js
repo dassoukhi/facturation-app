@@ -141,119 +141,140 @@ export default function ModalRegister({ openRegister, handleCloseRegister }) {
               >
                 <span className={classes.textShow}>Créez votre compte</span>
               </div>
-              {isError && <MessageError message={messageError} />}
-              {loading && (
+
+              <div
+                style={{
+                  display: 'flex',
+                  marginBottom: 30,
+                  width: '100%',
+                  paddingLeft: '5px',
+                  paddingRight: '5px'
+                }}
+              >
+                <hr />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingLeft: '30px',
+                  paddingRight: '30px'
+                }}
+              >
+                {isError && <MessageError message={messageError} />}
+                {loading && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      paddingBottom: '20px'
+                    }}
+                  >
+                    <CircularProgress />
+                  </div>
+                )}
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    paddingBottom: '20px'
+                    justifyItems: 'center'
                   }}
                 >
-                  <CircularProgress />
+                  <TextField
+                    className={classes.inputStyle}
+                    required
+                    name='nameModal'
+                    label='Nom'
+                    fullWidth
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    size='small'
+                    variant='outlined'
+                    autoComplete='given-name'
+                  />
                 </div>
-              )}
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  justifyItems: 'center'
-                }}
-              >
-                <TextField
-                  className={classes.inputStyle}
-                  required
-                  name='nameModal'
-                  label='Nom'
-                  fullWidth
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  size='small'
-                  variant='outlined'
-                  autoComplete='given-name'
-                />
-              </div>
-              <div
-                style={{
-                  marginTop: 'calc(5px + 0.5vw)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  justifyItems: 'center'
-                }}
-              >
-                <TextField
-                  className={classes.inputStyle}
-                  required
-                  name='emailModal'
-                  label='Email'
-                  type='email'
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  variant='outlined'
-                  size='small'
-                />
-              </div>
-              <div
-                style={{
-                  marginTop: 'calc(5px + 0.5vw)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  justifyItems: 'center'
-                }}
-              >
-                <TextField
-                  className={classes.inputStyle}
-                  required
-                  name='password'
-                  label='Mot de passe'
-                  type='password'
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  variant='outlined'
-                  size='small'
-                />
-              </div>
-              <div
-                style={{
-                  marginTop: 'calc(5px + 0.5vw)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  justifyItems: 'center'
-                }}
-              >
-                <TextField
-                  className={classes.inputStyle}
-                  required
-                  name='password'
-                  label='Confirmer mot de passe'
-                  type='password'
-                  value={passwordSame}
-                  onChange={e => setPasswordSame(e.target.value)}
-                  variant='outlined'
-                  size='small'
-                />
-              </div>
-
-              <div
-                style={{
-                  marginTop: 'calc(5px + 0.5vw)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  justifyItems: 'center'
-                }}
-              >
-                <Button
-                  variant='contained'
-                  color='primary'
-                  type='submit'
+                <div
                   style={{
-                    backgroundColor: '#2E99FF',
-                    textTransform: 'none',
-                    fontSize: '15px'
+                    marginTop: 'calc(5px + 0.5vw)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    justifyItems: 'center'
                   }}
                 >
-                  S'inscrire
-                </Button>
+                  <TextField
+                    className={classes.inputStyle}
+                    required
+                    name='emailModal'
+                    label='Email'
+                    type='email'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    variant='outlined'
+                    size='small'
+                  />
+                </div>
+                <div
+                  style={{
+                    marginTop: 'calc(5px + 0.5vw)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    justifyItems: 'center'
+                  }}
+                >
+                  <TextField
+                    className={classes.inputStyle}
+                    required
+                    name='password'
+                    label='Mot de passe'
+                    type='password'
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    variant='outlined'
+                    size='small'
+                  />
+                </div>
+                <div
+                  style={{
+                    marginTop: 'calc(5px + 0.5vw)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    justifyItems: 'center'
+                  }}
+                >
+                  <TextField
+                    className={classes.inputStyle}
+                    required
+                    name='password'
+                    label='Confirmer mot de passe'
+                    type='password'
+                    value={passwordSame}
+                    onChange={e => setPasswordSame(e.target.value)}
+                    variant='outlined'
+                    size='small'
+                  />
+                </div>
+
+                <div
+                  style={{
+                    marginTop: 'calc(5px + 0.5vw)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    justifyItems: 'center'
+                  }}
+                >
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    type='submit'
+                    style={{
+                      backgroundColor: '#2E99FF',
+                      textTransform: 'none',
+                      fontSize: '15px'
+                    }}
+                  >
+                    S'inscrire
+                  </Button>
+                </div>
               </div>
             </form>
           </div>

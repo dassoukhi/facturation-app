@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 0, 3),
     borderRadius: '12px',
     outline: 'none',
     justifyItems: 'center',
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   textForgotDiv: {
     display: 'flex',
     width: 300,
-    paddingBottom: 20,
+    paddingBottom: 25,
     textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
       width: '260px'
@@ -130,8 +130,7 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                 style={{
                   display: 'flex',
                   justifyContent: 'flex-end',
-                  marginLeft: 20,
-                  marginBottom: 10,
+                  marginLeft: -10,
                   padding: 0,
                   width: '100%'
                 }}
@@ -152,14 +151,13 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   X
                 </button>
               </div>
-
               <div
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   display: 'flex',
                   height: '35px',
-                  marginBottom: 15
+                  marginBottom: 5
                 }}
               >
                 {forgot ? (
@@ -172,102 +170,122 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   </span>
                 )}
               </div>
-              {isError && <MessageError message={messageError} />}
-              {loading && (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    paddingBottom: '20px'
-                  }}
-                >
-                  <CircularProgress />
-                </div>
-              )}
-              {forgot && (
-                <div className={classes.textForgotDiv}>
-                  <span className={classes.textForgotSapn}>
-                    {TextForgotPassword}
-                  </span>
-                </div>
-              )}
               <div
                 style={{
                   display: 'flex',
-                  justifyContent: 'center',
-                  justifyItems: 'center'
+                  marginBottom: 30,
+                  width: '100%',
+                  paddingLeft: '5px',
+                  paddingRight: '5px'
                 }}
               >
-                <TextField
-                  className={classes.inputStyle}
-                  required
-                  name='emailModal'
-                  label='Email'
-                  type='email'
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  variant='outlined'
-                  size='small'
-                />
+                <hr />
               </div>
-              {!forgot && (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingLeft: '30px',
+                  paddingRight: '30px'
+                }}
+              >
+                {isError && <MessageError message={messageError} />}
+                {loading && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      paddingBottom: '20px'
+                    }}
+                  >
+                    <CircularProgress />
+                  </div>
+                )}
+                {forgot && (
+                  <div className={classes.textForgotDiv}>
+                    <span className={classes.textForgotSapn}>
+                      {TextForgotPassword}
+                    </span>
+                  </div>
+                )}
                 <div
                   style={{
                     display: 'flex',
-                    marginTop: '15px',
                     justifyContent: 'center',
                     justifyItems: 'center'
                   }}
                 >
                   <TextField
-                    required
                     className={classes.inputStyle}
-                    name='passwordModal'
-                    label='Mot de passe'
-                    type='password'
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    required
+                    name='emailModal'
+                    label='Email'
+                    type='email'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                     variant='outlined'
                     size='small'
                   />
                 </div>
-              )}
+                {!forgot && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      marginTop: '15px',
+                      justifyContent: 'center',
+                      justifyItems: 'center'
+                    }}
+                  >
+                    <TextField
+                      required
+                      className={classes.inputStyle}
+                      name='passwordModal'
+                      label='Mot de passe'
+                      type='password'
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      variant='outlined'
+                      size='small'
+                    />
+                  </div>
+                )}
 
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '20px'
-                }}
-              >
-                <Button
-                  variant='contained'
-                  color='primary'
-                  type='submit'
+                <div
                   style={{
-                    backgroundColor: '#2E99FF',
-                    textTransform: 'none',
-                    fontSize: '15px'
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '20px'
                   }}
                 >
-                  {forgot ? 'Envoyer' : 'Connexion'}
-                </Button>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '20px'
-                }}
-              >
-                <a
-                  href='#'
-                  onClick={isForgotPassword}
-                  style={{ textDecoration: 'none' }}
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    type='submit'
+                    style={{
+                      backgroundColor: '#2E99FF',
+                      textTransform: 'none',
+                      fontSize: '15px'
+                    }}
+                  >
+                    {forgot ? 'Envoyer' : 'Connexion'}
+                  </Button>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '20px'
+                  }}
                 >
-                  {!forgot ? 'Mot de passe oublié?' : 'Se connecter?'}
-                </a>
-                <ToastMessage />
+                  <a
+                    href='#'
+                    onClick={isForgotPassword}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    {!forgot ? 'Mot de passe oublié?' : 'Se connecter?'}
+                  </a>
+                  <ToastMessage />
+                </div>
               </div>
             </form>
           </div>
