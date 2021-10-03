@@ -6,6 +6,7 @@ import FactureParamScreen from '../pages/factureParamScreen'
 import ParamGeneralScreen from '../pages/paramGeneralScreen'
 import DisplayInvoice from '../components/pdf/displayInvoice'
 import HomeScreen from '../pages/homeScreen'
+import ResetPassword from '../components/resetPassword'
 
 function Routes() {
   const user = localStorage.getItem('user')
@@ -38,6 +39,11 @@ function Routes() {
             path='/parametre/general'
             exact
             component={ParamGeneralScreen}
+          />
+          <Route
+            exact
+            path='/reset_password/:token'
+            component={ResetPassword}
           />
         </Switch>
       </div>

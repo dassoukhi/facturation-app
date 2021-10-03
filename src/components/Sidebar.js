@@ -26,6 +26,7 @@ const SidebarNav = styled.div`
   left: 0;
   transition: 350ms;
   z-index: 10;
+  border-radius: ;
 `
 
 const SidebarWrap = styled.div`

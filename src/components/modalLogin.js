@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 0, 3),
+    padding: theme.spacing(2, 4, 3),
     borderRadius: '12px',
     outline: 'none',
     justifyItems: 'center',
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   textForgotDiv: {
     display: 'flex',
     width: 300,
-    paddingBottom: 25,
+    paddingBottom: 27,
     textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
       width: '260px'
@@ -106,7 +106,6 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
   }
 
   const isForgotPassword = () => {
-    console.log('forgot')
     setForgot(!forgot)
   }
   return (
@@ -156,7 +155,7 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   justifyContent: 'center',
                   alignItems: 'center',
                   display: 'flex',
-                  height: '35px',
+                  height: '60px',
                   marginBottom: 5
                 }}
               >
