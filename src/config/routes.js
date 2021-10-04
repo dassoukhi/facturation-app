@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import FacturesScreen from '../pages/facturesScreen'
 import ClientsScreen from '../pages/clientsScreen'
 import EntrepriseParamScreen from '../pages/entrepriseParamScreen'
