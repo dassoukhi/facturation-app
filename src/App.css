@@ -143,3 +143,97 @@ nav {
   color: #000000;
   font-size: 2rem;
 }
+
+#btn {
+  margin-top: 30px;
+  text-transform: none;
+  width: 200px;
+  height: 50px;
+  align-content: center;
+ }
+
+ #iconSad {
+  color: gray; font-size: 300px;
+ }
+
+
+@media screen and (max-width: 922px) {
+  .containerForm {
+    width: 65%;
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .containerForm {
+    width: 75%;
+    height: 50%;
+    padding: 30px;
+  }
+  .divPanel p{
+    font-size: 1.5rem;
+  }
+
+  #iconSad {
+    font-size: 200px;
+   }
+}
+
+@media screen and (max-width: 414px) {
+  .containerForm {
+    width: 85%;
+    height: 60%;
+    padding: 20px;
+  }
+  .divPanel p{
+    font-size: 1.4rem;
+  }
+  #iconSad {
+    font-size: 100px;
+   }
+}
+
+@media screen and (max-width: 340px) {
+  .containerForm {
+    width: 85%;
+    height: 60%;
+    padding: 20px;
+  }
+  .divPanel{
+    margin-bottom: 20px;
+  }
+  .divPanel p{
+    font-size: 1.2rem;
+  }
+  #password {
+    height: 15px;
+  }
+  #password_confirm {
+    height: 15px;
+  }
+}
+
+
+@media screen and (max-width: 280px) {
+  .containerForm {
+    width: 85%;
+    height: 60%;
+    padding-bottom: 10px;
+  }
+  .divPanel{
+    margin-bottom: 20px;
+  }
+  .divPanel p{
+    font-size: 1.1rem;
+  }
+  #password {
+    height: 10px;
+  }
+  #password_confirm {
+    height: 10px;
+  }
+  #btn{
+    height: 40px;
+    margin-top: 20px;
+  }
+}

@@ -283,7 +283,7 @@ export default function ModalLogin({ openLogin, handleCloseLogin }) {
                   >
                     {!forgot ? 'Mot de passe oublié?' : 'Se connecter?'}
                   </a>
-                  <ToastMessage />
+                  <ToastMessage positionToast={'0px'} />
                 </div>
               </div>
             </form>

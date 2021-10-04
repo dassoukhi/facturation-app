@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import { Toaster } from 'react-hot-toast'
 
-const ToastMessage = () => {
+const ToastMessage = ({ positionToast }) => {
   return (
     <div>
       <Toaster
         position='top-center'
-        containerStyle={{ marginLeft: 'calc(1px + 15vw)' }}
+        containerStyle={{ marginLeft: { positionToast } }}
       />
     </div>
   )
