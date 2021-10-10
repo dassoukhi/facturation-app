@@ -14,8 +14,16 @@ const SidebarLink = styled(Link)`
   text-decoration: none;
   font-size: 18px;
 
-  &:hover {
+  /* &:hover {
     background: #1769aa;
+    border-left: 4px solid #632ce4;
+    cursor: pointer;
+  } */
+
+  background: ${props => props.isActive};
+
+  &:hover {
+    background: gray;
     border-left: 4px solid #632ce4;
     cursor: pointer;
   }
@@ -36,9 +44,10 @@ const DropdownLink = styled(Link)`
   text-decoration: none;
   color: #f5f5f5;
   font-size: 18px;
+  background-color: ${props => props.isActive};
 
   &:hover {
-    background: #1769aa;
+    background: gray;
     cursor: pointer;
   }
   &:active {
@@ -48,14 +57,18 @@ const DropdownLink = styled(Link)`
 const IconDiv = styled.div`
   font-size: 1.2rem;
 `
-const SubMenu = ({ item }) => {
+const SubMenu = ({ item, active }) => {
   const [subnav, setSubnav] = useState(false)
 
   const showSubnav = () => setSubnav(!subnav)
-
+  const isActive = active ? '#1769aa' : ''
   return (
     <>
-      <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
+      <SidebarLink
+        to={item.path}
+        onClick={item.subNav && showSubnav}
+        isActive={isActive}
+      >
         <div style={{ display: 'flex' }}>
           <IconDiv>{item.icon}</IconDiv>
 
@@ -72,7 +85,7 @@ const SubMenu = ({ item }) => {
       {subnav &&
         item.subNav.map((item, index) => {
           return (
-            <DropdownLink to={item.path} key={index}>
+            <DropdownLink to={item.path} key={index} isActive={isActive}>
               {item.icon}
               <SidebarLabel>{item.title}</SidebarLabel>
             </DropdownLink>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import styled from 'styled-components'
 import { SidebarData } from './SidebarData'
@@ -36,10 +36,20 @@ const SidebarWrap = styled.div`
 const Sidebar = () => {
   const user = localStorage.getItem('user')
   const history = useHistory()
-  console.log('user : ', user)
+  const location = history.location.pathname
+  const [defaultActive, setdefaultActive] = useState(
+    JSON.parse(localStorage.getItem('numLoc') || 0)
+  )
   if (!user) {
     history.push('/')
   }
+
+  useEffect(() => {
+    const index = SidebarData.findIndex(e => e.path === location)
+    localStorage.setItem('numLoc', index)
+    setdefaultActive(index)
+  }, [location])
+  console.log(history.location.pathname)
   return (
     <>
       <SidebarNav sidebar={null}>
@@ -50,7 +60,13 @@ const Sidebar = () => {
             </span>
           </NavIcon>
           {SidebarData.map((item, index) => {
-            return <SubMenu item={item} key={index} />
+            return (
+              <SubMenu
+                item={item}
+                key={index}
+                active={defaultActive === index}
+              />
+            )
           })}
         </SidebarWrap>
       </SidebarNav>
